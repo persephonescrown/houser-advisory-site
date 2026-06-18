@@ -18,10 +18,10 @@
       --surface-2:   #2A1B1E;
       --border:      #3A2326;
       --border-2:    #4A2E32;
-      --gold:        #E04848;
-      --gold-light:  #B85A4A;
-      --gold-dim:    rgba(224,72,72,0.14);
-      --gold-border: rgba(224,72,72,0.28);
+      --gold:        #8C2F2F;
+      --gold-light:  #E05050;
+      --gold-dim:    rgba(140,47,47,0.14);
+      --gold-border: rgba(140,47,47,0.28);
       --text:        #F4E4E4;
       --text-muted:  #B89090;
       --text-faint:  #9C7C7C;
@@ -73,7 +73,7 @@
       letter-spacing: 0.03em;
       text-decoration: none;
     }
-    .nav-logo span { color: var(--gold); }
+    .nav-logo span { color: var(--gold-light); }
     .nav-links { display: flex; align-items: center; gap: 2rem; list-style: none; }
     .nav-links a {
       color: var(--text-muted);
@@ -86,13 +86,13 @@
     .nav-links a:hover { color: var(--white); }
     .nav-cta {
       background: var(--gold) !important;
-      color: var(--bg) !important;
+      color: var(--white) !important;
       padding: 0.5rem 1.25rem !important;
       border-radius: 4px !important;
       font-weight: 600 !important;
-      transition: background 0.2s !important;
+      transition: background 0.2s, color 0.2s !important;
     }
-    .nav-cta:hover { background: var(--gold-light) !important; }
+    .nav-cta:hover { background: var(--gold-light) !important; color: var(--bg) !important; }
 
     /* ─── HERO ────────────────────────────────────── */
     #hero {
@@ -152,7 +152,7 @@
       font-weight: 600;
       letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: var(--gold);
+      color: var(--gold-light);
       margin-bottom: 1.75rem;
       opacity: 0;
       transform: translateY(16px);
@@ -178,7 +178,7 @@
     }
     h1.hero-headline em {
       font-style: italic;
-      color: var(--gold);
+      color: var(--gold-light);
     }
 
     .hero-sub {
@@ -205,16 +205,16 @@
     .btn-primary {
       display: inline-block;
       background: var(--gold);
-      color: var(--bg);
+      color: var(--white);
       font-weight: 600;
       font-size: 0.9375rem;
       padding: 0.875rem 2rem;
       border-radius: 4px;
       text-decoration: none;
       letter-spacing: 0.02em;
-      transition: background 0.2s, transform 0.15s;
+      transition: background 0.2s, color 0.2s, transform 0.15s;
     }
-    .btn-primary:hover { background: var(--gold-light); transform: translateY(-1px); }
+    .btn-primary:hover { background: var(--gold-light); color: var(--bg); transform: translateY(-1px); }
 
     .btn-ghost {
       display: inline-flex;
@@ -274,7 +274,7 @@
       font-weight: 600;
       letter-spacing: 0.16em;
       text-transform: uppercase;
-      color: var(--gold);
+      color: var(--gold-light);
       margin-bottom: 1.25rem;
     }
     .section-label::before {
@@ -392,7 +392,7 @@
       margin-top: 0.5rem;
       letter-spacing: -0.02em;
     }
-    .about-left h2 em { color: var(--gold); }
+    .about-left h2 em { color: var(--gold-light); }
     .about-headshot-wrap { margin-bottom: 1.5rem; }
     .about-headshot {
       width: 300px;
@@ -421,7 +421,7 @@
       font-weight: 700;
       letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: var(--gold);
+      color: var(--gold-light);
       margin-bottom: 0.625rem;
     }
     .about-card h4 {
@@ -533,7 +533,7 @@
     }
     .form-group input:focus,
     .form-group select:focus,
-    .form-group textarea:focus { border-color: var(--gold); box-shadow: 0 0 0 3px var(--gold-dim); }
+    .form-group textarea:focus { border-color: var(--gold-light); box-shadow: 0 0 0 3px var(--gold-dim); }
     .form-group input::placeholder,
     .form-group textarea::placeholder { color: var(--text-faint); }
     .form-group select {
@@ -549,7 +549,7 @@
 
     .btn-submit {
       background: var(--gold);
-      color: var(--bg);
+      color: var(--white);
       font-weight: 600;
       font-size: 0.9375rem;
       padding: 0.875rem 2rem;
@@ -557,11 +557,11 @@
       border: none;
       cursor: pointer;
       letter-spacing: 0.02em;
-      transition: background 0.2s, transform 0.15s;
+      transition: background 0.2s, color 0.2s, transform 0.15s;
       font-family: inherit;
       text-align: center;
     }
-    .btn-submit:hover { background: var(--gold-light); transform: translateY(-1px); }
+    .btn-submit:hover { background: var(--gold-light); color: var(--bg); transform: translateY(-1px); }
     .btn-submit:disabled { background: var(--green); color: var(--green-text); transform: none; cursor: default; }
 
     .radio-group { display: flex; flex-wrap: wrap; gap: 0.625rem; }
@@ -608,7 +608,7 @@
       margin: 0 auto;
     }
     .footer-logo { font-family: 'Instrument Serif', serif; font-size: 1rem; color: var(--text-muted); }
-    .footer-logo span { color: var(--gold); }
+    .footer-logo span { color: var(--gold-light); }
     .footer-copy { font-size: 0.8125rem; color: var(--text-faint); }
     .footer-links { display: flex; gap: 1.5rem; list-style: none; }
     .footer-links a { font-size: 0.8125rem; color: var(--text-faint); text-decoration: none; transition: color 0.2s; }
