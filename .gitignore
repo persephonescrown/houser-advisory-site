@@ -1,0 +1,7 @@
+# Ignore everything
+*
+
+# Unignore site project files only
+!index.html
+!WhitneyHouserHeadshot.jpeg
+!.gitignore
