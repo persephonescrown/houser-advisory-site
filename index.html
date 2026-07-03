@@ -156,6 +156,7 @@
       transform: translateY(16px);
       animation: fadeUp 0.9s 0.55s forwards;
     }
+    .hero-diagram-frame { position: relative; }
     .hero-diagram svg { width: 100%; height: auto; display: block; overflow: visible; }
     .loop-path { fill: none; stroke: var(--line); stroke-width: 1.5; }
     .loop-dot { fill: var(--signal); filter: drop-shadow(0 0 4px var(--signal)); }
@@ -937,6 +938,7 @@
       </div>
     </div>
     <div class="hero-diagram" aria-hidden="true">
+      <div class="hero-diagram-frame">
       <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
         <path id="loop-path" class="loop-path" d="M 80,50 H 320 A 40,40 0 0 1 360,90 V 210 A 40,40 0 0 1 320,250 H 80 A 40,40 0 0 1 40,210 V 90 A 40,40 0 0 1 80,50 Z" />
 
@@ -978,6 +980,7 @@
       <div class="loop-center">
         <div class="loop-center-name">Diagnose</div>
         <div class="loop-center-desc">Map the work as it happens today</div>
+      </div>
       </div>
       <div class="loop-caption">The Governed Loop · How Every Engagement Runs</div>
       <div class="gate-log">
