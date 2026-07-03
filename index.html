@@ -4,10 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Houser Intelligence Advisory: Operations & AI Advisory</title>
-  <meta name="description" content="Whitney builds the operating model, alignment, and enablement that turn AI experiments into production systems, and helps organizations of any size run more efficiently. Fixed scope. Fully remote.">
+  <meta name="description" content="Houser Intelligence Advisory builds governed AI agents and workflows for GTM, RevOps, and enablement teams, then makes them stick. Fixed scope. Human gates by design.">
 
   <meta property="og:title" content="Houser Intelligence Advisory">
-  <meta property="og:description" content="Whitney builds the operating model, alignment, and enablement that turn AI experiments into production systems, and helps organizations of any size run more efficiently. Fixed scope. Fully remote.">
+  <meta property="og:description" content="Houser Intelligence Advisory builds governed AI agents and workflows for GTM, RevOps, and enablement teams, then makes them stick. Fixed scope. Human gates by design.">
   <meta property="og:type" content="website">
 
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2311161C'/%3E%3Ctext x='32' y='45' font-family='Georgia, serif' font-size='36' font-weight='600' fill='%23F0F4FA' text-anchor='middle'%3EH%3C/text%3E%3Ccircle cx='49' cy='15' r='4.5' fill='%237FE7C4'/%3E%3C/svg%3E">
@@ -217,6 +217,49 @@
       color: var(--text-faint);
     }
 
+    .gate-log {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-top: 0.85rem;
+    }
+    .gate-log-viewport {
+      overflow: hidden;
+      flex: 1;
+      -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+      mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+    }
+    .gate-log-track {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+      white-space: nowrap;
+      width: max-content;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.03em;
+      color: var(--text-faint);
+      animation: gateScroll 30s linear infinite;
+    }
+    .gate-log:hover .gate-log-track { animation-play-state: paused; }
+    .gate-log-track.reduced { animation: none; }
+    .gate-log-track.reduced li:not(:first-child) { display: none; }
+    .gate-log-static {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      flex-shrink: 0;
+    }
+    @keyframes gateScroll {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .gate-log-track { animation: none !important; }
+    }
+
     .hero-eyebrow {
       display: inline-flex;
       align-items: center;
@@ -250,6 +293,13 @@
       transform: translateY(16px);
       animation: fadeUp 0.7s 0.3s forwards;
       letter-spacing: -0.015em;
+      position: relative;
+      z-index: 3;
+    }
+
+    @media (min-width: 1300px) {
+      h1.hero-headline { font-size: clamp(2.6rem, 6.5vw, 6rem); }
+      .hero-text { position: relative; z-index: 3; margin-right: -4rem; }
     }
 
     .hero-sub {
@@ -339,7 +389,7 @@
     .section-wrap {
       max-width: 1100px;
       margin: 0 auto;
-      padding: 4rem 2rem;
+      padding: 5.5rem 2rem;
     }
     .section-label {
       display: flex;
@@ -381,12 +431,24 @@
     #standing-rule {
       background: var(--surface);
       border-top: 2px solid var(--signal);
-      padding: 5rem 2rem;
+      padding: 7rem 2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    #standing-rule::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      opacity: 0.05;
+      pointer-events: none;
     }
     .standing-rule-inner {
       max-width: 760px;
       margin: 0 auto;
       text-align: center;
+      position: relative;
+      z-index: 1;
     }
     .standing-rule-inner .section-label { justify-content: center; }
     .standing-rule-headline {
@@ -407,6 +469,15 @@
     .method-intro { margin-bottom: 2.75rem; }
     .method-phases { display: flex; flex-direction: column; max-width: 680px; }
     .loop-mini-step { display: flex; align-items: flex-start; gap: 1.1rem; }
+    .loop-mini-num {
+      font-family: 'Fraunces', Georgia, serif;
+      font-weight: 500;
+      font-size: 0.85rem;
+      color: var(--text-faint);
+      flex-shrink: 0;
+      width: 1.75rem;
+      padding-top: 0.15rem;
+    }
     .loop-mini-node {
       width: 14px; height: 14px;
       flex-shrink: 0;
@@ -417,7 +488,7 @@
       transition: border-color 0.2s;
     }
     .loop-mini-step:hover .loop-mini-node { border-color: var(--cobalt-bright); }
-    .loop-mini-connector { width: 1.5px; height: 1.5rem; background: var(--line); margin-left: 6.25px; }
+    .loop-mini-connector { width: 1.5px; height: 1.5rem; background: var(--line); margin-left: calc(1.75rem + 1.1rem + 6.25px); }
     .loop-mini-body h4 {
       font-family: 'IBM Plex Mono', monospace;
       font-size: 0.8125rem;
@@ -429,6 +500,99 @@
     }
     .loop-mini-body p { font-size: 0.9375rem; color: var(--text-muted); line-height: 1.7; max-width: 58ch; }
 
+    /* ─── SCORER ──────────────────────────────────── */
+    #scorer { background: var(--ink); }
+    .scorer-wrap { max-width: 640px; }
+    .scorer-wrap .section-label { justify-content: center; }
+    .scorer-headline {
+      font-size: clamp(1.85rem, 4vw, 2.5rem);
+      font-weight: 600;
+      color: var(--white);
+      text-align: center;
+      margin-bottom: 1rem;
+      letter-spacing: -0.01em;
+    }
+    .scorer-sub {
+      font-size: 1rem;
+      color: var(--text-muted);
+      text-align: center;
+      max-width: 60ch;
+      margin: 0 auto 2.75rem;
+      line-height: 1.75;
+    }
+    .scorer-question { margin-bottom: 1.75rem; }
+    .scorer-question-label {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 0.75rem;
+    }
+    .scorer-options { display: flex; flex-wrap: wrap; gap: 0.625rem; }
+    .scorer-option {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      background: var(--surface);
+      border: 1px solid var(--line);
+      padding: 0.625rem 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s, background 0.2s;
+    }
+    .scorer-option:hover { border-color: var(--line-bright); color: var(--white); }
+    .scorer-option:focus-visible { outline: 2px solid var(--cobalt-bright); outline-offset: 2px; }
+    .scorer-option.selected {
+      background: var(--cobalt-dim);
+      border-color: var(--cobalt-border);
+      color: var(--white);
+    }
+    .scorer-result {
+      margin-top: 2.5rem;
+      padding: 1.75rem;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      min-height: 3rem;
+      display: none;
+    }
+    .scorer-result.visible { display: block; }
+    .scorer-result-scoring {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+    }
+    .scorer-verdict-chip {
+      display: inline-block;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.375rem 0.875rem;
+      border-radius: 100px;
+      margin-bottom: 0.9rem;
+    }
+    .scorer-verdict-chip.signal { background: var(--signal-dim); color: var(--signal); }
+    .scorer-verdict-chip.cobalt { background: var(--cobalt-dim); color: var(--cobalt-bright); }
+    .scorer-verdict-chip.muted { background: var(--surface-2); color: var(--text-muted); }
+    .scorer-verdict-gate { margin-right: 0.375rem; }
+    .scorer-verdict-rationale { font-size: 0.9375rem; color: var(--text-muted); line-height: 1.7; }
+    .scorer-cta {
+      margin-top: 2.5rem;
+      text-align: center;
+      padding-top: 2rem;
+      border-top: 1px solid var(--line);
+    }
+    .scorer-cta p { font-size: 0.9375rem; color: var(--text-muted); margin-bottom: 1rem; }
+
     /* ─── ENGAGEMENTS ─────────────────────────────── */
     #engagements { background: var(--surface); }
     .tiers {
@@ -436,6 +600,7 @@
       grid-template-columns: repeat(3, 1fr);
       gap: 1.5rem;
       margin-bottom: 3rem;
+      align-items: start;
     }
     .tier-card {
       background: var(--surface-2);
@@ -448,6 +613,14 @@
       transition: border-color 0.2s;
     }
     .tier-card:hover { border-color: var(--line-bright); }
+    .tier-card:nth-child(2) {
+      transform: translateY(-1.25rem);
+      border-color: var(--cobalt-border);
+      box-shadow: 0 16px 36px rgba(0,0,0,0.28);
+    }
+    @media (max-width: 900px) {
+      .tier-card:nth-child(2) { transform: none; box-shadow: none; }
+    }
     .tier-name {
       font-family: 'Fraunces', Georgia, serif;
       font-size: 1.05rem;
@@ -529,7 +702,7 @@
       display: block;
     }
     .about-body { display: flex; flex-direction: column; gap: 1.1rem; }
-    .about-body p { font-size: 1rem; color: var(--text-muted); line-height: 1.8; }
+    .about-body p { font-size: 1rem; color: var(--text-muted); line-height: 1.8; max-width: 68ch; }
 
     .about-right { display: flex; flex-direction: column; gap: 1.25rem; }
     .about-card {
@@ -608,6 +781,7 @@
       color: var(--text-muted);
       line-height: 1.75;
       margin-bottom: 1.75rem;
+      max-width: 68ch;
     }
 
     .contact-meta { display: flex; flex-direction: column; gap: 0.75rem; }
@@ -737,6 +911,7 @@
   <a href="#" class="nav-logo">Houser <span>Intelligence</span> Advisory</a>
   <ul class="nav-links">
     <li><a href="#method">The Governed Loop</a></li>
+    <li><a href="#scorer">Score a Workflow</a></li>
     <li><a href="#engagements">Engagements</a></li>
     <li><a href="#about">About</a></li>
     <li><a href="#contact" class="nav-cta">Book an audit</a></li>
@@ -805,6 +980,19 @@
         <div class="loop-center-desc">Map the work as it happens today</div>
       </div>
       <div class="loop-caption">The Governed Loop · How Every Engagement Runs</div>
+      <div class="gate-log">
+        <div class="gate-log-viewport">
+          <ul class="gate-log-track" id="gateLogTrack">
+            <li>07:41 GATE &middot; CAMPAIGN SEND &rarr; APPROVED, ONE TAP</li>
+            <li>07:42 AUTO &middot; CRM DEDUPE &rarr; RAN CLEAN, NO GATE NEEDED</li>
+            <li>08:15 AUTO &middot; FORECAST ROLLUP &rarr; POSTED TO #REVOPS</li>
+            <li>09:03 HELD &middot; REFUND OVER THRESHOLD &rarr; AWAITING OWNER</li>
+            <li>09:04 GATE &middot; CONTRACT DRAFT &rarr; APPROVED, EDITED FIRST</li>
+            <li>11:20 AUTO &middot; LEAD ROUTED &rarr; 41 SECONDS FROM FORM FILL</li>
+          </ul>
+        </div>
+        <span class="gate-log-static">Simulated</span>
+      </div>
     </div>
   </div>
 </section>
@@ -827,7 +1015,7 @@
   <div class="standing-rule-inner reveal">
     <div class="section-label">The Standing Rule</div>
     <h2 class="standing-rule-headline">Autonomy where it is safe. Approval where it matters.</h2>
-    <p class="standing-rule-body">No system Houser Intelligence Advisory ships can send, spend, share, delete, or publish on its own. Every consequential action passes through a named human gate, by design. Clients keep the keys. The systems keep the pace.</p>
+    <p class="standing-rule-body">No system Houser Intelligence Advisory ships can send, spend, share, delete, or publish on its own. Every consequential action passes through a named human gate, by design. Clients keep the keys. The systems keep the pace. A gate is a one-tap approval, not a second job. Most take seconds, and they loosen as the system earns trust.</p>
   </div>
 </section>
 
@@ -842,28 +1030,127 @@
 
     <div class="method-phases reveal reveal-delay-2">
       <div class="loop-mini-step">
+        <div class="loop-mini-num">01</div>
         <div class="loop-mini-node"></div>
         <div class="loop-mini-body">
-          <h4>Diagnose + Design</h4>
-          <p>A 45-minute working session and a scored map of where automation pays and where it does not. Some of the highest-value findings are the workflows that should stay human.</p>
+          <h4>Diagnose</h4>
+          <p>A 45-minute working session and a scored map of where automation pays and where it does not.</p>
         </div>
       </div>
       <div class="loop-mini-connector"></div>
       <div class="loop-mini-step">
+        <div class="loop-mini-num">02</div>
         <div class="loop-mini-node"></div>
         <div class="loop-mini-body">
-          <h4>Build + Govern</h4>
-          <p>Agents and workflows shipped into real use, each with a named human gate. Fixed scope, so the incentive is a system that runs without her, not an engagement that never ends.</p>
+          <h4>Design</h4>
+          <p>The system specified: the workflow, the gates, and the owner, before anything is built.</p>
         </div>
       </div>
       <div class="loop-mini-connector"></div>
       <div class="loop-mini-step">
+        <div class="loop-mini-num">03</div>
         <div class="loop-mini-node"></div>
         <div class="loop-mini-body">
-          <h4>Adopt + Prove + Expand</h4>
-          <p>The behavior-change work most AI projects skip, then measurement the owner can see. Expansion happens when the numbers earn it.</p>
+          <h4>Build</h4>
+          <p>Agents and workflows shipped into real use. Some of the highest-value findings are the workflows that should stay human.</p>
         </div>
       </div>
+      <div class="loop-mini-connector"></div>
+      <div class="loop-mini-step">
+        <div class="loop-mini-num">04</div>
+        <div class="loop-mini-node"></div>
+        <div class="loop-mini-body">
+          <h4>Govern</h4>
+          <p>Nothing ships without a named human gate. Fixed scope, so the incentive is a system that runs without her, not an engagement that never ends.</p>
+        </div>
+      </div>
+      <div class="loop-mini-connector"></div>
+      <div class="loop-mini-step">
+        <div class="loop-mini-num">05</div>
+        <div class="loop-mini-node"></div>
+        <div class="loop-mini-body">
+          <h4>Adopt</h4>
+          <p>The behavior-change work most AI projects skip: training, workflow redesign, and buy-in from the people who run it.</p>
+        </div>
+      </div>
+      <div class="loop-mini-connector"></div>
+      <div class="loop-mini-step">
+        <div class="loop-mini-num">06</div>
+        <div class="loop-mini-node"></div>
+        <div class="loop-mini-body">
+          <h4>Prove</h4>
+          <p>Outcomes measured from day one, in numbers the owner can see.</p>
+        </div>
+      </div>
+      <div class="loop-mini-connector"></div>
+      <div class="loop-mini-step">
+        <div class="loop-mini-num">07</div>
+        <div class="loop-mini-node"></div>
+        <div class="loop-mini-body">
+          <h4>Expand</h4>
+          <p>Scale what earned it. Expansion happens when the numbers earn it.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="full-divider">
+
+<!-- ══════════════ WORKFLOW SCORER ══════════════ -->
+<section id="scorer">
+  <div class="section-wrap scorer-wrap">
+    <div class="section-label">Score A Workflow</div>
+    <h2 class="scorer-headline reveal">Score one of your workflows</h2>
+    <p class="scorer-sub reveal reveal-delay-1">Four questions, the same axes the audit runs on every workflow in the business: value, feasibility, data, and risk.</p>
+
+    <div class="scorer-questions reveal reveal-delay-2" id="scorerForm">
+      <div class="scorer-question">
+        <div class="scorer-question-label">Hours per week it consumes</div>
+        <div class="scorer-options" role="group" data-axis="hours" aria-label="Hours per week it consumes">
+          <button type="button" class="scorer-option" data-value="1">&lt;2</button>
+          <button type="button" class="scorer-option" data-value="2">2&ndash;5</button>
+          <button type="button" class="scorer-option" data-value="4">5&ndash;10</button>
+          <button type="button" class="scorer-option" data-value="5">10+</button>
+        </div>
+      </div>
+
+      <div class="scorer-question">
+        <div class="scorer-question-label">Could someone new do it from written steps?</div>
+        <div class="scorer-options" role="group" data-axis="steps" aria-label="Could someone new do it from written steps?">
+          <button type="button" class="scorer-option" data-value="5">Yes, it's a checklist</button>
+          <button type="button" class="scorer-option" data-value="4">Mostly, light judgment</button>
+          <button type="button" class="scorer-option" data-value="2">Half of it is judgment</button>
+          <button type="button" class="scorer-option" data-value="1">It's all judgment</button>
+        </div>
+      </div>
+
+      <div class="scorer-question">
+        <div class="scorer-question-label">Where does the information live?</div>
+        <div class="scorer-options" role="group" data-axis="data" aria-label="Where does the information live?">
+          <button type="button" class="scorer-option" data-value="5">One system</button>
+          <button type="button" class="scorer-option" data-value="4">A few systems</button>
+          <button type="button" class="scorer-option" data-value="2">Spreadsheets and email</button>
+          <button type="button" class="scorer-option" data-value="1">People's heads</button>
+        </div>
+      </div>
+
+      <div class="scorer-question">
+        <div class="scorer-question-label">If it fails in front of a customer or the books</div>
+        <div class="scorer-options" role="group" data-axis="risk" aria-label="If it fails in front of a customer or the books">
+          <button type="button" class="scorer-option" data-value="1">Nothing happens</button>
+          <button type="button" class="scorer-option" data-value="2">Annoying</button>
+          <button type="button" class="scorer-option" data-value="4">Expensive</button>
+          <button type="button" class="scorer-option" data-value="5">Severe</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="scorer-result" id="scorerResult" aria-live="polite"></div>
+
+    <div class="scorer-cta reveal">
+      <p>The full audit scores every workflow in the business and names what to build first. $999.</p>
+      <a href="#contact" class="btn-ghost">Book an audit →</a>
     </div>
   </div>
 </section>
@@ -905,10 +1192,9 @@
             <tr><th>Workflow</th><th>Hrs/Wk</th><th>Impact</th><th>Feasibility</th><th>Risk</th><th>Verdict</th></tr>
           </thead>
           <tbody>
-            <tr><td>Missed-call and DM triage</td><td>14</td><td>5</td><td>4</td><td>3</td><td class="verdict-build">Build First</td></tr>
-            <tr><td>Weekly owner reporting</td><td>5</td><td>4</td><td>4</td><td>1</td><td class="verdict-cobalt">Quick Win</td></tr>
-            <tr><td>Inventory ordering</td><td>6</td><td>4</td><td>2</td><td>3</td><td class="verdict-cobalt">Watchlist</td></tr>
-            <tr><td>Client consultations</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td>5</td><td class="verdict-human">Keep Human</td></tr>
+            <tr><td>Lead routing and CRM hygiene</td><td>9</td><td>5</td><td>4</td><td>2</td><td class="verdict-build">Build First</td></tr>
+            <tr><td>Pipeline and forecast rollup</td><td>6</td><td>4</td><td>5</td><td>1</td><td class="verdict-cobalt">Quick Win</td></tr>
+            <tr><td>Deal desk approvals</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td>5</td><td class="verdict-human">Keep Human</td></tr>
           </tbody>
         </table>
       </div>
@@ -929,29 +1215,28 @@
           <img src="WhitneyHouserHeadshot.jpeg" alt="Whitney Houser" class="about-headshot">
         </div>
         <div class="about-body reveal">
-          <p>Whitney spent 15 years building enablement and operations functions inside SaaS, e-commerce, and ed-tech companies. She holds an MBA, a Graduate Certificate in Organizational Leadership, and an M.A. in Counseling: a combination that positions her at the intersection of operational strategy and organizational change management.</p>
+          <p>Whitney builds AI agents and workflows for go-to-market teams: revenue operations, enablement, and the systems that run between them. Her current work is agentic systems inside a SaaS revenue organization, agents that route leads, keep CRMs honest, generate enablement content, and report on pipeline without a human copying data between tabs. Before that, fifteen years building enablement and operations functions across SaaS, e-commerce, and ed-tech. An MBA covers the business case. An M.A. in Counseling covers the part most AI consultants can't: getting people to change how they work.</p>
         </div>
       </div>
       <div class="about-right reveal reveal-delay-1">
         <div class="about-card">
-          <div class="about-card-tag">What the work looks like</div>
-          <h4>Designs and deploys agentic workflows, builds the teams and operations that make AI stick</h4>
-          <p>Most consultants hand you a strategy deck and leave. Whitney owns the work: designing the agentic workflows, building the enablement structure, and aligning the teams that turn AI from a pilot into a production system.</p>
+          <div class="about-card-tag">What she builds</div>
+          <h4>Agents and governed workflows for GTM</h4>
+          <p>Lead routing, CRM hygiene, forecast rollups, enablement content engines, onboarding systems. Built with the same tools she recommends, shipped with human gates, documented so the team owns them.</p>
         </div>
         <div class="about-card">
-          <div class="about-card-tag">For those in build mode</div>
-          <h4>Solo operators, scaling teams, anyone ready to stop planning and start building.</h4>
-          <p>Whitney works across company sizes and industries: from solo operators building systems for the first time to scaling teams that need the organizational structure to match their ambition. If the work involves building better operations, enabling people, or deploying AI that gets used, that's the window she's built for.</p>
+          <div class="about-card-tag">Who it's for</div>
+          <h4>Solo operators to scaling revenue teams</h4>
+          <p>The solo operator automating for the first time and the RevOps leader with six stalled pilots have the same problem: systems that were never designed to be governed or adopted. That is the work.</p>
         </div>
         <div class="about-card">
-          <div class="about-card-tag">Her model</div>
-          <h4>Fractional, remote, and accountable to outcomes</h4>
-          <p>Fixed-scope engagements mean aligned incentives. She doesn't benefit from staying longer. The goal is to build operations, enablement, and AI-powered systems that are self-sufficient quickly, not dependent on her indefinitely. Her background also includes scaling placement programs inside edtech and university partnerships.</p>
+          <div class="about-card-tag">How she engages</div>
+          <h4>Fixed scope, accountable to outcomes</h4>
+          <p>Fixed-scope engagements mean aligned incentives. The goal is a system that runs without her, measured from day one. She does not benefit from staying longer.</p>
         </div>
         <div class="background-bar">
           <div class="background-bar-label">Background includes</div>
           <div class="tags">
-            <span class="tag">Invoca</span>
             <span class="tag">Go1</span>
             <span class="tag">Etsy</span>
             <span class="tag">WeWork</span>
@@ -1017,6 +1302,7 @@
   <p class="footer-copy">© 2026 Houser Intelligence Advisory. All rights reserved.</p>
   <ul class="footer-links">
     <li><a href="#method">The Governed Loop</a></li>
+    <li><a href="#scorer">Score a Workflow</a></li>
     <li><a href="#engagements">Engagements</a></li>
     <li><a href="#about">About</a></li>
     <li><a href="#contact">Contact</a></li>
@@ -1065,6 +1351,83 @@
         if (loopCenter) loopCenter.classList.remove('dim');
       }, 300);
     }, 2000);
+  }
+
+  // Gate log ticker
+  const gateTrack = document.getElementById('gateLogTrack');
+  if (gateTrack) {
+    if (prefersReducedMotion) {
+      gateTrack.classList.add('reduced');
+    } else {
+      gateTrack.innerHTML += gateTrack.innerHTML;
+    }
+  }
+
+  // Workflow Scorer
+  const scorerAxes = ['hours', 'steps', 'data', 'risk'];
+  const scorerAnswers = {};
+  const scorerForm = document.getElementById('scorerForm');
+  const scorerResult = document.getElementById('scorerResult');
+  let scorerHasRun = false;
+  const gateGlyph = '<svg class="scorer-verdict-gate" width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><rect x="1" y="1" width="2.5" height="8" fill="currentColor"></rect><rect x="6.5" y="1" width="2.5" height="8" fill="currentColor"></rect></svg>';
+
+  const scorerVerdicts = {
+    'BUILD FIRST':   { chip: 'signal', gate: false, text: 'High value, high feasibility, controllable risk. This is the system that pays for its own build.' },
+    'BUILD, GATED':  { chip: 'signal', gate: true,  text: 'Worth building, too expensive to get wrong. It ships with heavy human gates and earns autonomy over time.' },
+    'QUICK WIN':     { chip: 'cobalt', gate: false, text: 'Worth automating with a light build and a simple gate.' },
+    'WATCHLIST':     { chip: 'muted',  gate: false, text: 'Automating this now would cost more than it returns. Revisit when the volume or the data improves.' },
+    'NOT YET':       { chip: 'muted',  gate: false, text: 'The value is real but the knowledge lives in people’s heads. Document it first, then automate the checklist.' },
+    'KEEP HUMAN':    { chip: 'muted',  gate: false, text: 'Judgment-led work. Some of the highest-value findings in an audit are the workflows that should stay human.' }
+  };
+
+  function computeScorerVerdict(hours, steps, data, risk) {
+    const feasibility = (steps + data) / 2;
+    const priority = hours * feasibility;
+    if (steps === 1) return 'KEEP HUMAN';
+    if (data === 1 && hours >= 4) return 'NOT YET';
+    if (data === 1) return 'WATCHLIST';
+    if (risk === 5 && priority >= 12) return 'BUILD, GATED';
+    if (risk === 5) return 'WATCHLIST';
+    if (priority >= 16) return 'BUILD FIRST';
+    if (priority >= 8) return 'QUICK WIN';
+    return 'WATCHLIST';
+  }
+
+  function renderScorerVerdict() {
+    const { hours, steps, data, risk } = scorerAnswers;
+    const name = computeScorerVerdict(hours, steps, data, risk);
+    const v = scorerVerdicts[name];
+    scorerResult.innerHTML =
+      '<div class="scorer-verdict-chip ' + v.chip + '">' + (v.gate ? gateGlyph : '') + name + '</div>' +
+      '<p class="scorer-verdict-rationale">' + v.text + '</p>';
+  }
+
+  if (scorerForm) {
+    scorerForm.querySelectorAll('.scorer-options').forEach(group => {
+      const axis = group.dataset.axis;
+      group.querySelectorAll('.scorer-option').forEach(btn => {
+        btn.addEventListener('click', () => {
+          group.querySelectorAll('.scorer-option').forEach(b => {
+            b.classList.remove('selected');
+            b.setAttribute('aria-pressed', 'false');
+          });
+          btn.classList.add('selected');
+          btn.setAttribute('aria-pressed', 'true');
+          scorerAnswers[axis] = Number(btn.dataset.value);
+
+          if (scorerAxes.every(a => scorerAnswers[a] !== undefined)) {
+            if (!scorerHasRun) {
+              scorerHasRun = true;
+              scorerResult.classList.add('visible');
+              scorerResult.innerHTML = '<div class="scorer-result-scoring">Scoring&hellip;</div>';
+              setTimeout(renderScorerVerdict, 300);
+            } else {
+              renderScorerVerdict();
+            }
+          }
+        });
+      });
+    });
   }
 
   // Nav scroll state
