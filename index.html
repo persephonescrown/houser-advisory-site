@@ -3,11 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Houser Intelligence Advisory — Operations & AI Advisory</title>
-  <meta name="description" content="Whitney builds the operating model, alignment, and enablement that turn AI experiments into production systems — and helps organizations of any size run more efficiently. Fixed scope. Fully remote.">
+  <title>Houser Intelligence Advisory: Operations & AI Advisory</title>
+  <meta name="description" content="Whitney builds the operating model, alignment, and enablement that turn AI experiments into production systems, and helps organizations of any size run more efficiently. Fixed scope. Fully remote.">
+
+  <meta property="og:title" content="Houser Intelligence Advisory">
+  <meta property="og:description" content="Whitney builds the operating model, alignment, and enablement that turn AI experiments into production systems, and helps organizations of any size run more efficiently. Fixed scope. Fully remote.">
+  <meta property="og:type" content="website">
+
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2311161C'/%3E%3Ctext x='32' y='45' font-family='Georgia, serif' font-size='36' font-weight='600' fill='%23F0F4FA' text-anchor='middle'%3EH%3C/text%3E%3Ccircle cx='49' cy='15' r='4.5' fill='%237FE7C4'/%3E%3C/svg%3E">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -20,14 +27,14 @@
       --line:        #2A3542;
       --line-bright: #3D4C60;
 
-      /* Accent — Cobalt family, unchanged core */
+      /* Accent: Cobalt family */
       --cobalt:        #3D6FA8;
       --cobalt-bright: #6E9CCC;
       --cobalt-dim:    rgba(61,111,168,0.14);
       --cobalt-border: rgba(61,111,168,0.28);
 
-      /* Signal accent — live/active states only: the pulse traveling the
-         loop diagram, a "live" status dot, hover states on diagram nodes.
+      /* Signal accent: live/active states only. The pulse traveling the
+         loop diagram, active-node highlights, the BUILD FIRST verdict.
          Never for body text or large fills. */
       --signal:      #7FE7C4;
       --signal-dim:  rgba(127,231,196,0.16);
@@ -50,14 +57,14 @@
       color: var(--text);
       font-family: 'IBM Plex Sans', system-ui, sans-serif;
       font-weight: 400;
-      line-height: 1.6;
+      line-height: 1.65;
       overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
     }
 
     h1, h2, h3, h4 {
-      font-family: 'Space Grotesk', system-ui, sans-serif;
-      font-weight: 400;
+      font-family: 'Fraunces', Georgia, serif;
+      font-weight: 500;
       line-height: 1.15;
     }
 
@@ -80,7 +87,7 @@
       border-color: var(--line);
     }
     .nav-logo {
-      font-family: 'Space Grotesk', system-ui, sans-serif;
+      font-family: 'Fraunces', Georgia, serif;
       font-weight: 600;
       font-size: 1.05rem;
       color: var(--white);
@@ -90,11 +97,13 @@
     .nav-logo span { color: var(--cobalt-bright); }
     .nav-links { display: flex; align-items: center; gap: 2rem; list-style: none; }
     .nav-links a {
+      font-family: 'IBM Plex Mono', monospace;
       color: var(--text-muted);
       text-decoration: none;
-      font-size: 0.875rem;
+      font-size: 0.75rem;
       font-weight: 500;
-      letter-spacing: 0.01em;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
       transition: color 0.2s;
     }
     .nav-links a:hover { color: var(--white); }
@@ -142,6 +151,7 @@
       width: 100%;
       max-width: 440px;
       margin-left: auto;
+      position: relative;
       opacity: 0;
       transform: translateY(16px);
       animation: fadeUp 0.9s 0.55s forwards;
@@ -153,25 +163,59 @@
       fill: var(--surface-2);
       stroke: var(--line-bright);
       stroke-width: 1.5;
-      transition: stroke 0.2s;
+      transition: stroke 0.3s ease;
     }
     .loop-node:hover circle, .loop-node:focus circle { stroke: var(--cobalt-bright); }
+    .loop-node.active circle {
+      stroke: var(--cobalt-bright);
+      animation: nodeTick 0.5s ease-out;
+    }
     .loop-node text {
       font-family: 'IBM Plex Mono', monospace;
       font-size: 7px;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.05em;
       fill: var(--text-faint);
       text-transform: uppercase;
     }
-    .loop-tooltip {
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 6.5px;
-      fill: var(--cobalt-bright);
-      opacity: 0;
-      transition: opacity 0.2s;
-      pointer-events: none;
+    @keyframes nodeTick {
+      0% { filter: drop-shadow(0 0 0 var(--signal)); }
+      40% { filter: drop-shadow(0 0 6px var(--signal)); }
+      100% { filter: drop-shadow(0 0 0 var(--signal)); }
     }
-    .loop-node:hover .loop-tooltip, .loop-node:focus .loop-tooltip { opacity: 1; }
+
+    .loop-center {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 60%;
+      text-align: center;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    .loop-center.dim { opacity: 0; }
+    .loop-center-name {
+      font-family: 'Fraunces', Georgia, serif;
+      font-weight: 500;
+      font-size: 1.15rem;
+      color: var(--white);
+      margin-bottom: 0.4rem;
+    }
+    .loop-center-desc {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.63rem;
+      letter-spacing: 0.03em;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+    .loop-caption {
+      margin-top: 1rem;
+      text-align: center;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+    }
 
     .hero-eyebrow {
       display: inline-flex;
@@ -198,17 +242,14 @@
 
     h1.hero-headline {
       font-size: clamp(2.6rem, 6.5vw, 5.25rem);
+      font-weight: 600;
       color: var(--white);
       max-width: 26ch;
       margin-bottom: 1.75rem;
       opacity: 0;
       transform: translateY(16px);
       animation: fadeUp 0.7s 0.3s forwards;
-      letter-spacing: -0.02em;
-    }
-    h1.hero-headline em {
-      font-style: italic;
-      color: var(--cobalt-bright);
+      letter-spacing: -0.015em;
     }
 
     .hero-sub {
@@ -322,75 +363,49 @@
 
     /* ─── PROBLEM ─────────────────────────────────── */
     #problem { background: var(--ink); }
-
-    .problem-grid {
-      display: grid;
-      grid-template-columns: 1.3fr 1fr;
-      gap: 3.5rem;
-      align-items: center;
-    }
     .problem-headline {
       font-size: clamp(1.75rem, 4vw, 3.25rem);
+      font-weight: 600;
       color: var(--white);
-      max-width: 20ch;
+      max-width: 26ch;
       margin-bottom: 1.5rem;
     }
     .problem-intro {
       font-size: 1.0625rem;
       color: var(--text-muted);
-      max-width: 58ch;
+      max-width: 62ch;
       line-height: 1.75;
     }
-    .problem-stat {
+
+    /* ─── STANDING RULE ───────────────────────────── */
+    #standing-rule {
       background: var(--surface);
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      padding: 2.75rem 2.25rem;
+      border-top: 2px solid var(--signal);
+      padding: 5rem 2rem;
+    }
+    .standing-rule-inner {
+      max-width: 760px;
+      margin: 0 auto;
       text-align: center;
     }
-    .problem-stat-number {
-      font-family: 'Space Grotesk', system-ui, sans-serif;
-      font-weight: 500;
-      font-size: clamp(3.5rem, 7vw, 5.25rem);
+    .standing-rule-inner .section-label { justify-content: center; }
+    .standing-rule-headline {
+      font-size: clamp(1.85rem, 4vw, 2.75rem);
+      font-weight: 600;
       color: var(--white);
-      line-height: 1;
-      letter-spacing: -0.02em;
+      margin-bottom: 1.5rem;
+      letter-spacing: -0.01em;
     }
-    .problem-stat-rule {
-      width: 2.5rem;
-      height: 2px;
-      background: var(--signal);
-      box-shadow: 0 0 8px var(--signal-dim);
-      margin: 1.25rem auto;
-    }
-    .problem-stat-label {
-      font-size: 0.9375rem;
+    .standing-rule-body {
+      font-size: 1.0625rem;
       color: var(--text-muted);
-      line-height: 1.6;
-    }
-    .problem-stat-label span {
-      display: block;
-      font-family: 'IBM Plex Mono', monospace;
-      font-size: 0.7rem;
-      color: var(--text-faint);
-      margin-top: 0.5rem;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
+      line-height: 1.85;
     }
 
-    /* ─── OFFER ───────────────────────────────────── */
-    #offer { background: var(--surface); }
-
-    .offer-grid {
-      display: grid;
-      grid-template-columns: 1.2fr 1fr;
-      gap: 4rem;
-      align-items: center;
-    }
-    .offer-simple { max-width: 62ch; }
-    .offer-tagline { font-size: 1.0625rem; color: var(--text-muted); line-height: 1.75; margin-bottom: 1.5rem; }
-
-    .loop-mini { display: flex; flex-direction: column; }
+    /* ─── METHOD (THE GOVERNED LOOP) ──────────────── */
+    #method { background: var(--ink); }
+    .method-intro { margin-bottom: 2.75rem; }
+    .method-phases { display: flex; flex-direction: column; max-width: 680px; }
     .loop-mini-step { display: flex; align-items: flex-start; gap: 1.1rem; }
     .loop-mini-node {
       width: 14px; height: 14px;
@@ -410,19 +425,81 @@
       letter-spacing: 0.08em;
       text-transform: uppercase;
       color: var(--white);
-      margin-bottom: 0.25rem;
+      margin-bottom: 0.375rem;
     }
-    .loop-mini-body p { font-size: 0.875rem; color: var(--text-muted); line-height: 1.55; }
+    .loop-mini-body p { font-size: 0.9375rem; color: var(--text-muted); line-height: 1.7; max-width: 58ch; }
 
-    /* ─── HOW IT WORKS ────────────────────────────── */
-    #how-it-works { background: var(--ink); }
-    .how-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
-    @media (max-width: 900px) {
-      .how-grid { grid-template-columns: 1fr; }
+    /* ─── ENGAGEMENTS ─────────────────────────────── */
+    #engagements { background: var(--surface); }
+    .tiers {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-bottom: 3rem;
     }
+    .tier-card {
+      background: var(--surface-2);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      transition: border-color 0.2s;
+    }
+    .tier-card:hover { border-color: var(--line-bright); }
+    .tier-name {
+      font-family: 'Fraunces', Georgia, serif;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--white);
+    }
+    .tier-price {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.9rem;
+      letter-spacing: 0.06em;
+      color: var(--cobalt-bright);
+    }
+    .tier-desc { font-size: 0.875rem; color: var(--text-muted); line-height: 1.65; flex-grow: 1; }
 
-    /* ─── START HERE ──────────────────────────────── */
-    #start-here { background: var(--surface); }
+    .specimen {
+      background: var(--surface-2);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 2rem;
+    }
+    .specimen-caption {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      margin-bottom: 1.25rem;
+    }
+    .specimen-table-wrap { overflow-x: auto; }
+    .specimen-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.75rem;
+    }
+    .specimen-table th, .specimen-table td {
+      text-align: left;
+      padding: 0.65rem 0.9rem 0.65rem 0;
+      border-bottom: 1px solid var(--line);
+      white-space: nowrap;
+    }
+    .specimen-table th {
+      color: var(--text-faint);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+    .specimen-table td { color: var(--text-muted); }
+    .specimen-table tr:last-child td { border-bottom: none; }
+    .verdict-build { color: var(--signal); font-weight: 500; }
+    .verdict-cobalt { color: var(--cobalt-bright); font-weight: 500; }
+    .verdict-human { color: var(--text-muted); font-weight: 500; }
 
     /* ─── ABOUT ───────────────────────────────────── */
     #about { background: var(--ink); }
@@ -435,12 +512,12 @@
     }
     .about-left h2 {
       font-size: clamp(1.75rem, 3.5vw, 2.75rem);
+      font-weight: 600;
       color: var(--white);
       margin-bottom: 1.5rem;
       margin-top: 0.5rem;
       letter-spacing: -0.02em;
     }
-    .about-left h2 em { color: var(--cobalt-bright); }
     .about-headshot-wrap { margin-bottom: 1.5rem; }
     .about-headshot {
       width: 300px;
@@ -453,7 +530,6 @@
     }
     .about-body { display: flex; flex-direction: column; gap: 1.1rem; }
     .about-body p { font-size: 1rem; color: var(--text-muted); line-height: 1.8; }
-    .about-body p strong { color: var(--text); font-weight: 500; }
 
     .about-right { display: flex; flex-direction: column; gap: 1.25rem; }
     .about-card {
@@ -488,9 +564,10 @@
       padding: 1.75rem;
     }
     .background-bar-label {
+      font-family: 'IBM Plex Mono', monospace;
       font-size: 0.7rem;
-      font-weight: 700;
-      letter-spacing: 0.12em;
+      font-weight: 500;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
       color: var(--text-faint);
       margin-bottom: 1.1rem;
@@ -520,6 +597,7 @@
     }
     .contact-left h2 {
       font-size: clamp(1.75rem, 3.5vw, 2.75rem);
+      font-weight: 600;
       color: var(--white);
       margin-bottom: 1rem;
       margin-top: 0.5rem;
@@ -532,37 +610,19 @@
       margin-bottom: 1.75rem;
     }
 
-
-    .contact-meta { display: flex; flex-direction: column; gap: 0.875rem; }
-    .contact-item {
-      display: flex;
-      align-items: center;
-      gap: 0.875rem;
-      font-size: 0.875rem;
+    .contact-meta { display: flex; flex-direction: column; gap: 0.75rem; }
+    .contact-item-mono {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
       color: var(--text-muted);
     }
-    .contact-item-icon {
-      width: 30px; height: 30px;
-      background: var(--cobalt-dim);
-      border: 1px solid var(--cobalt-border);
-      border-radius: 5px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.8rem;
-      flex-shrink: 0;
-    }
+    .contact-link { color: var(--cobalt-bright); text-decoration: none; }
+    .contact-link:hover { color: var(--white); }
 
     /* form */
-    .or-row {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      margin-bottom: 1.5rem;
-    }
-    .or-row::before, .or-row::after { content: ''; flex: 1; height: 1px; background: var(--line); }
-    .or-row span { font-size: 0.75rem; color: var(--text-faint); letter-spacing: 0.06em; text-transform: uppercase; white-space: nowrap; }
-
     .contact-form { display: flex; flex-direction: column; gap: 1.1rem; }
     .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
     .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
@@ -586,14 +646,6 @@
     .form-group textarea:focus { border-color: var(--cobalt-bright); box-shadow: 0 0 0 3px var(--cobalt-dim); }
     .form-group input::placeholder,
     .form-group textarea::placeholder { color: var(--text-faint); }
-    .form-group select {
-      cursor: pointer;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath fill='%237A90AE' d='M5 6L0 0h10z'/%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: right 1rem center;
-      appearance: none;
-    }
-    .form-group select option { background: var(--surface-2); }
     .form-group textarea { min-height: 110px; resize: vertical; }
     .form-note { font-size: 0.75rem; color: var(--text-faint); }
 
@@ -614,37 +666,6 @@
     .btn-submit:hover { background: var(--cobalt-bright); color: var(--ink); transform: translateY(-1px); }
     .btn-submit:disabled { background: var(--green); color: var(--green-text); transform: none; cursor: default; }
 
-    .radio-group { display: flex; flex-wrap: wrap; gap: 0.625rem; }
-    .radio-option { position: relative; }
-    .radio-option input {
-      position: absolute;
-      opacity: 0;
-      width: 1px; height: 1px;
-    }
-    .radio-option label {
-      display: inline-flex;
-      align-items: center;
-      font-size: 0.8125rem;
-      font-weight: 500;
-      color: var(--text-muted);
-      background: var(--surface);
-      border: 1px solid var(--line);
-      padding: 0.5rem 1.125rem;
-      border-radius: 100px;
-      cursor: pointer;
-      transition: background 0.2s, border-color 0.2s, color 0.2s;
-    }
-    .radio-option input:checked + label {
-      background: var(--cobalt-dim);
-      border-color: var(--cobalt-border);
-      color: var(--white);
-    }
-    .radio-option input:focus-visible + label {
-      outline: 2px solid var(--cobalt);
-      outline-offset: 2px;
-    }
-    .optional-tag { color: var(--text-faint); font-weight: 400; }
-
     /* ─── FOOTER ──────────────────────────────────── */
     footer {
       border-top: 1px solid var(--line);
@@ -657,11 +678,19 @@
       max-width: 1100px;
       margin: 0 auto;
     }
-    .footer-logo { font-family: 'Space Grotesk', system-ui, sans-serif; font-weight: 600; font-size: 1rem; color: var(--text-muted); }
+    .footer-logo { font-family: 'Fraunces', Georgia, serif; font-weight: 600; font-size: 1rem; color: var(--text-muted); }
     .footer-logo span { color: var(--cobalt-bright); }
     .footer-copy { font-size: 0.8125rem; color: var(--text-faint); }
     .footer-links { display: flex; gap: 1.5rem; list-style: none; }
-    .footer-links a { font-size: 0.8125rem; color: var(--text-faint); text-decoration: none; transition: color 0.2s; }
+    .footer-links a {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
     .footer-links a:hover { color: var(--text-muted); }
 
     /* ─── ANIMATIONS ──────────────────────────────── */
@@ -680,12 +709,11 @@
 
     /* ─── RESPONSIVE ──────────────────────────────── */
     @media (max-width: 900px) {
-      .problem-grid { grid-template-columns: 1fr; gap: 2.25rem; }
-      .offer-grid { grid-template-columns: 1fr; gap: 2.25rem; }
       .about-grid { grid-template-columns: 1fr; gap: 2.25rem; }
       .contact-grid { grid-template-columns: 1fr; gap: 2.25rem; }
       .hero-inner { grid-template-columns: 1fr; }
       .hero-diagram { max-width: 320px; margin: 2rem auto 0; }
+      .tiers { grid-template-columns: 1fr; }
     }
 
     @media (max-width: 768px) {
@@ -694,6 +722,7 @@
       #hero { padding: 5.5rem 1.25rem 3rem; }
       .hero-pills { gap: 0.5rem; }
       .hero-diagram { max-width: 100%; }
+      .loop-center { display: none; }
       .form-row { grid-template-columns: 1fr; }
       footer { flex-direction: column; text-align: center; align-items: center; }
       .about-headshot { width: 220px; height: 220px; }
@@ -707,12 +736,10 @@
 <nav id="nav">
   <a href="#" class="nav-logo">Houser <span>Intelligence</span> Advisory</a>
   <ul class="nav-links">
-    <li><a href="#problem">The Problem</a></li>
-    <li><a href="#offer">How We Work</a></li>
-    <li><a href="#how-it-works">How It Works</a></li>
-    <li><a href="#start-here">Start Here</a></li>
+    <li><a href="#method">The Governed Loop</a></li>
+    <li><a href="#engagements">Engagements</a></li>
     <li><a href="#about">About</a></li>
-    <li><a href="#contact" class="nav-cta">See If We're a Fit</a></li>
+    <li><a href="#contact" class="nav-cta">Book an audit</a></li>
   </ul>
 </nav>
 
@@ -722,15 +749,16 @@
   <div class="hero-inner">
     <div class="hero-text">
       <div class="hero-eyebrow">Operations &amp; AI Advisory</div>
-      <h1 class="hero-headline">The best operations don't happen by accident. They're <em>built.</em></h1>
-      <p class="hero-sub">Houser Intelligence Advisory builds the agents and workflows companies actually put into production — and the behavior-change work that makes people use them.</p>
+      <h1 class="hero-headline">AI that reaches production. Teams that keep the keys.</h1>
+      <p class="hero-sub">Houser Intelligence Advisory builds the agents and workflows companies put into real use, then does the behavior-change work that makes them stick. Governed by design, from solo operators to scaling teams.</p>
       <div class="hero-actions">
-        <a href="#contact" class="btn-primary">See If We're a Fit</a>
+        <a href="#contact" class="btn-primary">Book an audit</a>
+        <a href="#method" class="btn-ghost">See how the Loop works →</a>
       </div>
       <div class="hero-pills">
-        <div class="hero-pill"><div class="hero-pill-dot"></div>AI that makes it to production</div>
-        <div class="hero-pill"><div class="hero-pill-dot"></div>From solo operators to scaling teams</div>
-        <div class="hero-pill"><div class="hero-pill-dot"></div>Aligned incentives · Fully remote</div>
+        <div class="hero-pill"><div class="hero-pill-dot"></div>Governed by Design</div>
+        <div class="hero-pill"><div class="hero-pill-dot"></div>Fixed Scope</div>
+        <div class="hero-pill"><div class="hero-pill-dot"></div>Remote, US-Wide</div>
       </div>
     </div>
     <div class="hero-diagram" aria-hidden="true">
@@ -738,47 +766,45 @@
         <path id="loop-path" class="loop-path" d="M 80,50 H 320 A 40,40 0 0 1 360,90 V 210 A 40,40 0 0 1 320,250 H 80 A 40,40 0 0 1 40,210 V 90 A 40,40 0 0 1 80,50 Z" />
 
         <circle class="loop-dot" r="4">
-          <animateMotion id="loop-dot-anim" dur="12s" repeatCount="indefinite" rotate="auto">
+          <animateMotion id="loop-dot-anim" dur="14s" repeatCount="indefinite" calcMode="linear" rotate="auto">
             <mpath href="#loop-path"></mpath>
           </animateMotion>
         </circle>
 
         <g class="loop-node" tabindex="0">
           <circle cx="110" cy="50" r="7"></circle>
-          <text x="110" y="34" text-anchor="middle">Trigger</text>
-          <text class="loop-tooltip" x="110" y="70" text-anchor="middle">What starts it</text>
+          <text x="110" y="34" text-anchor="middle">Diagnose</text>
         </g>
         <g class="loop-node" tabindex="0">
           <circle cx="200" cy="50" r="7"></circle>
-          <text x="200" y="34" text-anchor="middle">Scope</text>
-          <text class="loop-tooltip" x="200" y="70" text-anchor="middle">What's in bounds</text>
+          <text x="200" y="34" text-anchor="middle">Design</text>
         </g>
         <g class="loop-node" tabindex="0">
           <circle cx="290" cy="50" r="7"></circle>
-          <text x="290" y="34" text-anchor="middle">Action</text>
-          <text class="loop-tooltip" x="290" y="70" text-anchor="middle">The agent executes</text>
+          <text x="290" y="34" text-anchor="middle">Build</text>
         </g>
         <g class="loop-node" tabindex="0">
           <circle cx="360" cy="150" r="7"></circle>
-          <text x="374" y="147" text-anchor="start">Budget</text>
-          <text class="loop-tooltip" x="345" y="172" text-anchor="end">Cost and time caps</text>
+          <text x="374" y="147" text-anchor="start">Govern</text>
         </g>
         <g class="loop-node" tabindex="0">
           <circle cx="290" cy="250" r="7"></circle>
-          <text x="290" y="272" text-anchor="middle">Stop</text>
-          <text class="loop-tooltip" x="290" y="234" text-anchor="middle">Kill conditions</text>
+          <text x="290" y="272" text-anchor="middle">Adopt</text>
         </g>
         <g class="loop-node" tabindex="0">
           <circle cx="110" cy="250" r="7"></circle>
-          <text x="110" y="272" text-anchor="middle">Verify</text>
-          <text class="loop-tooltip" x="110" y="234" text-anchor="middle">Check the output</text>
+          <text x="110" y="272" text-anchor="middle">Prove</text>
         </g>
         <g class="loop-node" tabindex="0">
           <circle cx="40" cy="150" r="7"></circle>
-          <text x="26" y="147" text-anchor="end">Report</text>
-          <text class="loop-tooltip" x="55" y="172" text-anchor="start">What gets logged</text>
+          <text x="26" y="147" text-anchor="end">Expand</text>
         </g>
       </svg>
+      <div class="loop-center">
+        <div class="loop-center-name">Diagnose</div>
+        <div class="loop-center-desc">Map the work as it happens today</div>
+      </div>
+      <div class="loop-caption">The Governed Loop · How Every Engagement Runs</div>
     </div>
   </div>
 </section>
@@ -788,20 +814,55 @@
 <!-- ══════════════ PROBLEM ══════════════ -->
 <section id="problem">
   <div class="section-wrap">
-    <div class="problem-grid">
-      <div class="problem-left">
-        <div class="section-label">The Problem</div>
-        <h2 class="problem-headline reveal">AI pilots don't fail. Launches do.</h2>
-        <p class="problem-intro reveal reveal-delay-1">The tools work and the demos are impressive — pilots stall because nobody redesigned the workflow, brought the team along, or defined what "done" looks like. That's not a technology problem. It's a change management problem, and it's why AI initiatives stay stuck in pilot mode indefinitely.</p>
+    <div class="section-label">The Problem</div>
+    <h2 class="problem-headline reveal">AI pilots don't fail. Launches do.</h2>
+    <p class="problem-intro reveal reveal-delay-1">The tools work and the demos are impressive. Pilots stall because nobody redesigned the workflow, brought the team along, or defined what "done" looks like. That's not a technology problem. It's a change management problem, and it's why AI initiatives stay stuck in pilot mode indefinitely.</p>
+  </div>
+</section>
+
+<hr class="full-divider">
+
+<!-- ══════════════ STANDING RULE ══════════════ -->
+<section id="standing-rule">
+  <div class="standing-rule-inner reveal">
+    <div class="section-label">The Standing Rule</div>
+    <h2 class="standing-rule-headline">Autonomy where it is safe. Approval where it matters.</h2>
+    <p class="standing-rule-body">No system Houser Intelligence Advisory ships can send, spend, share, delete, or publish on its own. Every consequential action passes through a named human gate, by design. Clients keep the keys. The systems keep the pace.</p>
+  </div>
+</section>
+
+<hr class="full-divider">
+
+<!-- ══════════════ METHOD: THE GOVERNED LOOP ══════════════ -->
+<section id="method">
+  <div class="section-wrap">
+    <div class="section-label">The Method</div>
+    <h2 class="problem-headline reveal" style="max-width:none;">The Governed Loop</h2>
+    <p class="problem-intro reveal reveal-delay-1 method-intro">Every engagement runs through the same seven-stage system. It exists because most AI work fails at two points: the build never reaches production, or it reaches production and nobody uses it. The Governed Loop treats governance and adoption as first-class stages, not afterthoughts.</p>
+
+    <div class="method-phases reveal reveal-delay-2">
+      <div class="loop-mini-step">
+        <div class="loop-mini-node"></div>
+        <div class="loop-mini-body">
+          <h4>Diagnose + Design</h4>
+          <p>A 45-minute working session and a scored map of where automation pays and where it does not. Some of the highest-value findings are the workflows that should stay human.</p>
+        </div>
       </div>
-      <div class="problem-stat reveal reveal-delay-2">
-        <div class="problem-stat-number">95%</div>
-        <div class="problem-stat-rule"></div>
-        <p class="problem-stat-label">of AI pilots fail to deliver measurable ROI<span>(MIT NANDA Initiative, 2025)</span></p>
-        <div class="problem-stat-rule"></div>
-        <div class="problem-stat-number" style="font-size: clamp(2.5rem, 5vw, 3.75rem);">50%+</div>
-        <div class="problem-stat-rule"></div>
-        <p class="problem-stat-label">are abandoned entirely before reaching production<span>(Gartner, 2025)</span></p>
+      <div class="loop-mini-connector"></div>
+      <div class="loop-mini-step">
+        <div class="loop-mini-node"></div>
+        <div class="loop-mini-body">
+          <h4>Build + Govern</h4>
+          <p>Agents and workflows shipped into real use, each with a named human gate. Fixed scope, so the incentive is a system that runs without her, not an engagement that never ends.</p>
+        </div>
+      </div>
+      <div class="loop-mini-connector"></div>
+      <div class="loop-mini-step">
+        <div class="loop-mini-node"></div>
+        <div class="loop-mini-body">
+          <h4>Adopt + Prove + Expand</h4>
+          <p>The behavior-change work most AI projects skip, then measurement the owner can see. Expansion happens when the numbers earn it.</p>
+        </div>
       </div>
     </div>
   </div>
@@ -809,79 +870,48 @@
 
 <hr class="full-divider">
 
-<!-- ══════════════ OFFER ══════════════ -->
-<section id="offer">
+<!-- ══════════════ ENGAGEMENTS ══════════════ -->
+<section id="engagements">
   <div class="section-wrap">
-    <div class="offer-grid">
-      <div class="offer-simple reveal">
-        <div class="section-label">The Offer</div>
-        <h2 class="problem-headline" style="max-width:none;">How We Work Together</h2>
-        <p class="offer-tagline">Engagements are fixed-scope and tailored to where you are today — no two look exactly alike. A typical engagement moves through discovery and diagnostic work, followed by planning, structure design, and implementation. Depending on scope and complexity, engagements generally run one to six months. Full timeline and pricing are shared after an initial conversation about the priority.</p>
+    <div class="section-label">Pricing</div>
+    <h2 class="problem-headline reveal" style="max-width:none; margin-bottom: 2.5rem;">Engagements</h2>
+
+    <div class="tiers reveal reveal-delay-1">
+      <div class="tier-card">
+        <div class="tier-name">AI Opportunity Audit</div>
+        <div class="tier-price">$999</div>
+        <p class="tier-desc">A 45-minute working session, then a scored roadmap of the highest-return automation opportunities in the business, delivered within days. It names the one to build first and the ones to leave alone. The on-ramp, not the ceiling.</p>
+        <a href="#contact" class="btn-ghost">Book an audit →</a>
+      </div>
+      <div class="tier-card">
+        <div class="tier-name">Implementation</div>
+        <div class="tier-price">From $7,500</div>
+        <p class="tier-desc">A fixed-scope build of the first governed system: the agent or workflow, its human gates, and the two-week adoption cycle that makes the team use it. Scoped from audit findings.</p>
+        <a href="#contact" class="btn-ghost">Start with an audit →</a>
+      </div>
+      <div class="tier-card">
+        <div class="tier-name">Fractional Advisory</div>
+        <div class="tier-price">By conversation</div>
+        <p class="tier-desc">An ongoing operating partner for teams running multiple systems: governance reviews, new loop design, enablement, and the org change that keeps pace with the automation.</p>
         <a href="#contact" class="btn-ghost">Start the conversation →</a>
       </div>
-      <div class="loop-mini reveal reveal-delay-1">
-        <div class="loop-mini-step">
-          <div class="loop-mini-node"></div>
-          <div class="loop-mini-body">
-            <h4>Discover</h4>
-            <p>Map what's happening today, not what the org chart says is happening</p>
-          </div>
-        </div>
-        <div class="loop-mini-connector"></div>
-        <div class="loop-mini-step">
-          <div class="loop-mini-node"></div>
-          <div class="loop-mini-body">
-            <h4>Align</h4>
-            <p>Get the right people moving together</p>
-          </div>
-        </div>
-        <div class="loop-mini-connector"></div>
-        <div class="loop-mini-step">
-          <div class="loop-mini-node"></div>
-          <div class="loop-mini-body">
-            <h4>Deploy</h4>
-            <p>Put it into production and make it stick</p>
-          </div>
-        </div>
-      </div>
     </div>
-  </div>
-</section>
 
-<hr class="full-divider">
-
-<!-- ══════════════ HOW IT WORKS ══════════════ -->
-<section id="how-it-works">
-  <div class="section-wrap">
-    <div class="section-label">How It Works</div>
-    <h2 class="problem-headline reveal" style="max-width:none;">How it works</h2>
-    <div class="how-grid reveal reveal-delay-1">
-      <div class="about-card">
-        <div class="about-card-tag">Build</div>
-        <p>AI agents and workflows tailored to how your team operates, including marketing and content automation.</p>
+    <div class="specimen reveal reveal-delay-2">
+      <div class="specimen-caption">Sample Audit Output · Illustrative</div>
+      <div class="specimen-table-wrap">
+        <table class="specimen-table">
+          <thead>
+            <tr><th>Workflow</th><th>Hrs/Wk</th><th>Impact</th><th>Feasibility</th><th>Risk</th><th>Verdict</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Missed-call and DM triage</td><td>14</td><td>5</td><td>4</td><td>3</td><td class="verdict-build">Build First</td></tr>
+            <tr><td>Weekly owner reporting</td><td>5</td><td>4</td><td>4</td><td>1</td><td class="verdict-cobalt">Quick Win</td></tr>
+            <tr><td>Inventory ordering</td><td>6</td><td>4</td><td>2</td><td>3</td><td class="verdict-cobalt">Watchlist</td></tr>
+            <tr><td>Client consultations</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td>5</td><td class="verdict-human">Keep Human</td></tr>
+          </tbody>
+        </table>
       </div>
-      <div class="about-card">
-        <div class="about-card-tag">Adopt</div>
-        <p>The behavior-change work that makes people use what gets built. This is the part most AI projects skip, and it's why they fail.</p>
-      </div>
-      <div class="about-card">
-        <div class="about-card-tag">Prove</div>
-        <p>Measurable outcomes, tracked from day one, so the investment is legible to everyone who needs to see it.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<hr class="full-divider">
-
-<!-- ══════════════ START HERE ══════════════ -->
-<section id="start-here">
-  <div class="section-wrap">
-    <div class="reveal">
-      <div class="section-label">Start Here</div>
-      <h2 class="problem-headline" style="max-width:none;">Start here</h2>
-      <p class="offer-tagline" style="max-width: 68ch;">Every engagement starts with an AI Opportunity Audit: a 45-minute working session and a 24-hour deliverable that maps your highest-ROI automation opportunities and names the one to build first. $999 for most businesses, scaled to fit solo operators and larger teams. It's the on-ramp, not the ceiling.</p>
-      <a href="#contact" class="btn-ghost">Book your audit →</a>
     </div>
   </div>
 </section>
@@ -894,29 +924,29 @@
     <div class="about-grid">
       <div class="about-left">
         <div class="section-label">About</div>
-        <h2>Whitney turns scattered initiatives into systems that run — operations, enablement, and AI that delivers.</h2>
+        <h2>Whitney turns scattered initiatives into systems that run: operations, enablement, and AI that delivers.</h2>
         <div class="about-headshot-wrap reveal">
           <img src="WhitneyHouserHeadshot.jpeg" alt="Whitney Houser" class="about-headshot">
         </div>
         <div class="about-body reveal">
-          <p>Whitney spent 15 years building enablement and operations functions inside SaaS, e-commerce, and ed-tech companies. She holds an MBA, a Graduate Certificate in Organizational Leadership, and an M.A. in Counseling — a combination that positions her at the intersection of operational strategy and organizational change management.</p>
+          <p>Whitney spent 15 years building enablement and operations functions inside SaaS, e-commerce, and ed-tech companies. She holds an MBA, a Graduate Certificate in Organizational Leadership, and an M.A. in Counseling: a combination that positions her at the intersection of operational strategy and organizational change management.</p>
         </div>
       </div>
       <div class="about-right reveal reveal-delay-1">
         <div class="about-card">
           <div class="about-card-tag">What the work looks like</div>
           <h4>Designs and deploys agentic workflows, builds the teams and operations that make AI stick</h4>
-          <p>Most consultants hand you a strategy deck and leave. Whitney owns the work — designing the agentic workflows, building the enablement structure, and aligning the teams that turn AI from a pilot into a production system.</p>
+          <p>Most consultants hand you a strategy deck and leave. Whitney owns the work: designing the agentic workflows, building the enablement structure, and aligning the teams that turn AI from a pilot into a production system.</p>
         </div>
         <div class="about-card">
           <div class="about-card-tag">For those in build mode</div>
           <h4>Solo operators, scaling teams, anyone ready to stop planning and start building.</h4>
-          <p>Whitney works across company sizes and industries — from solo operators building systems for the first time to scaling teams that need the organizational structure to match their ambition. If the work involves building better operations, enabling people, or deploying AI that gets used, that's the window she's built for.</p>
+          <p>Whitney works across company sizes and industries: from solo operators building systems for the first time to scaling teams that need the organizational structure to match their ambition. If the work involves building better operations, enabling people, or deploying AI that gets used, that's the window she's built for.</p>
         </div>
         <div class="about-card">
           <div class="about-card-tag">Her model</div>
           <h4>Fractional, remote, and accountable to outcomes</h4>
-          <p>Fixed-scope engagements mean aligned incentives. She doesn't benefit from staying longer — the goal is to build operations, enablement, and AI-powered systems that are self-sufficient quickly, not dependent on her indefinitely. Her background also includes scaling placement programs inside edtech and university partnerships.</p>
+          <p>Fixed-scope engagements mean aligned incentives. She doesn't benefit from staying longer. The goal is to build operations, enablement, and AI-powered systems that are self-sufficient quickly, not dependent on her indefinitely. Her background also includes scaling placement programs inside edtech and university partnerships.</p>
         </div>
         <div class="background-bar">
           <div class="background-bar-label">Background includes</div>
@@ -945,17 +975,11 @@
       <div class="contact-left">
         <div class="section-label">Get in Touch</div>
         <h2>Let's See If We're a Fit</h2>
-        <p>Share where you're stuck and what you need help with. No pitch deck — just a real read on whether this is the right move for where you are.</p>
+        <p>Share where you're stuck and what you need help with. No pitch deck, just a real read on whether this is the right move for where you are.</p>
 
         <div class="contact-meta">
-          <div class="contact-item">
-            <div class="contact-item-icon">🌐</div>
-            <span>Fully remote · Available EST &amp; PST</span>
-          </div>
-          <div class="contact-item">
-            <div class="contact-item-icon">💼</div>
-            <span><a href="https://linkedin.com/in/houserwhitney" target="_blank" rel="noopener" style="color: var(--cobalt-bright); text-decoration: none;">Connect on LinkedIn</a></span>
-          </div>
+          <div class="contact-item-mono">Remote · US Time Zones</div>
+          <div class="contact-item-mono"><a href="https://linkedin.com/in/houserwhitney" target="_blank" rel="noopener" class="contact-link">LinkedIn ↗</a></div>
         </div>
       </div>
 
@@ -980,7 +1004,7 @@
             <textarea id="foutcome" name="outcome" required></textarea>
           </div>
           <p class="form-note">No spam, no newsletter, no unsolicited follow-up if we're not a fit.</p>
-          <button type="submit" class="btn-submit" id="submitBtn">See If We're a Fit</button>
+          <button type="submit" class="btn-submit" id="submitBtn">Send it</button>
         </form>
       </div>
     </div>
@@ -992,21 +1016,55 @@
   <div class="footer-logo">Houser <span>Intelligence</span> Advisory</div>
   <p class="footer-copy">© 2026 Houser Intelligence Advisory. All rights reserved.</p>
   <ul class="footer-links">
-    <li><a href="#problem">The Problem</a></li>
-    <li><a href="#offer">How We Work</a></li>
-    <li><a href="#how-it-works">How It Works</a></li>
-    <li><a href="#start-here">Start Here</a></li>
+    <li><a href="#method">The Governed Loop</a></li>
+    <li><a href="#engagements">Engagements</a></li>
     <li><a href="#about">About</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
-  <a href="https://linkedin.com/in/houserwhitney" target="_blank" rel="noopener" style="color: var(--text-faint); font-size: 0.8125rem; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='var(--text-muted)'" onmouseout="this.style.color='var(--text-faint)'">LinkedIn ↗</a>
+  <a href="https://linkedin.com/in/houserwhitney" target="_blank" rel="noopener" style="color: var(--text-faint); font-family: 'IBM Plex Mono', monospace; font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; transition: color 0.2s;" onmouseover="this.style.color='var(--text-muted)'" onmouseout="this.style.color='var(--text-faint)'">LinkedIn ↗</a>
 </footer>
 
 <script>
-  // Loop diagram: respect reduced-motion preference
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  // Loop diagram: seven-stage cycle synced to the hero center readout
+  const loopStages = [
+    { name: 'Diagnose', desc: 'Map the work as it happens today' },
+    { name: 'Design',   desc: 'Specify the system, the gates, the owner' },
+    { name: 'Build',    desc: 'Ship agents and workflows into real use' },
+    { name: 'Govern',   desc: 'Nothing ships without a named human gate' },
+    { name: 'Adopt',    desc: 'Behavior change that makes systems stick' },
+    { name: 'Prove',    desc: 'Outcomes measured from day one' },
+    { name: 'Expand',   desc: 'Scale what earned it' }
+  ];
+  const loopNodeEls = document.querySelectorAll('.loop-node');
+  const loopCenter = document.querySelector('.loop-center');
+  const loopCenterName = document.querySelector('.loop-center-name');
+  const loopCenterDesc = document.querySelector('.loop-center-desc');
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function setActiveLoopStage(i) {
+    loopNodeEls.forEach(n => n.classList.remove('active'));
+    if (loopNodeEls[i]) loopNodeEls[i].classList.add('active');
+    if (loopCenterName && loopCenterDesc) {
+      loopCenterName.textContent = loopStages[i].name;
+      loopCenterDesc.textContent = loopStages[i].desc;
+    }
+  }
+
+  if (prefersReducedMotion) {
     const dotAnim = document.getElementById('loop-dot-anim');
     if (dotAnim) dotAnim.remove();
+    setActiveLoopStage(3); // Govern, held static
+  } else if (loopNodeEls.length) {
+    let loopIdx = 0;
+    setActiveLoopStage(0);
+    setInterval(() => {
+      loopIdx = (loopIdx + 1) % loopStages.length;
+      if (loopCenter) loopCenter.classList.add('dim');
+      setTimeout(() => {
+        setActiveLoopStage(loopIdx);
+        if (loopCenter) loopCenter.classList.remove('dim');
+      }, 300);
+    }, 2000);
   }
 
   // Nav scroll state
@@ -1063,12 +1121,12 @@
         btn.textContent = 'Message sent ✓';
         form.reset();
       } else {
-        btn.textContent = 'Something went wrong — please try again';
+        btn.textContent = 'Something went wrong. Please try again';
         btn.disabled = false;
         setTimeout(() => { btn.textContent = originalText; }, 3500);
       }
     } catch (err) {
-      btn.textContent = 'Something went wrong — please try again';
+      btn.textContent = 'Something went wrong. Please try again';
       btn.disabled = false;
       setTimeout(() => { btn.textContent = originalText; }, 3500);
     }
