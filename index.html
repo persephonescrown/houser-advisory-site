@@ -4,28 +4,41 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Houser Intelligence Advisory — Operations & AI Advisory</title>
-  <meta name="description" content="Whitney Houser builds the operating model, alignment, and enablement that turn AI experiments into production systems — and helps organizations of any size run more efficiently. Fixed scope. Fully remote.">
+  <meta name="description" content="Whitney builds the operating model, alignment, and enablement that turn AI experiments into production systems — and helps organizations of any size run more efficiently. Fixed scope. Fully remote.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg:          #11161C;
-      --surface:     #1A2028;
-      --surface-2:   #212A36;
-      --border:      #2C3A4A;
-      --border-2:    #3A4C60;
-      --gold:        #3D6FA8;
-      --gold-light:  #6E9CCC;
-      --gold-dim:    rgba(61,111,168,0.14);
-      --gold-border: rgba(61,111,168,0.28);
+      /* Structure */
+      --ink:         #11161C;
+      --surface:     #171D26;
+      --surface-2:   #1D2530;
+      --line:        #2A3542;
+      --line-bright: #3D4C60;
+
+      /* Accent — Cobalt family, unchanged core */
+      --cobalt:        #3D6FA8;
+      --cobalt-bright: #6E9CCC;
+      --cobalt-dim:    rgba(61,111,168,0.14);
+      --cobalt-border: rgba(61,111,168,0.28);
+
+      /* Signal accent — live/active states only: the pulse traveling the
+         loop diagram, a "live" status dot, hover states on diagram nodes.
+         Never for body text or large fills. */
+      --signal:      #7FE7C4;
+      --signal-dim:  rgba(127,231,196,0.16);
+
+      /* Text */
       --text:        #E8EEF6;
       --text-muted:  #A8BEDC;
       --text-faint:  #7A90AE;
       --white:       #F0F4FA;
+
+      /* Status */
       --green:       #1F3F2B;
       --green-text:  #A0F0C8;
     }
@@ -33,17 +46,17 @@
     html { scroll-behavior: smooth; font-size: 16px; }
 
     body {
-      background: var(--bg);
+      background: var(--ink);
       color: var(--text);
-      font-family: 'Fraunces', Georgia, serif;
+      font-family: 'IBM Plex Sans', system-ui, sans-serif;
       font-weight: 400;
       line-height: 1.6;
       overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
     }
 
-    h1, h2, h3 {
-      font-family: 'Instrument Serif', Georgia, 'Times New Roman', serif;
+    h1, h2, h3, h4 {
+      font-family: 'Space Grotesk', system-ui, sans-serif;
       font-weight: 400;
       line-height: 1.15;
     }
@@ -64,16 +77,17 @@
       background: rgba(17,22,28,0.88);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
-      border-color: var(--border);
+      border-color: var(--line);
     }
     .nav-logo {
-      font-family: 'Instrument Serif', serif;
+      font-family: 'Space Grotesk', system-ui, sans-serif;
+      font-weight: 600;
       font-size: 1.05rem;
       color: var(--white);
       letter-spacing: 0.03em;
       text-decoration: none;
     }
-    .nav-logo span { color: var(--gold-light); }
+    .nav-logo span { color: var(--cobalt-bright); }
     .nav-links { display: flex; align-items: center; gap: 2rem; list-style: none; }
     .nav-links a {
       color: var(--text-muted);
@@ -85,14 +99,14 @@
     }
     .nav-links a:hover { color: var(--white); }
     .nav-cta {
-      background: var(--gold) !important;
+      background: var(--cobalt) !important;
       color: var(--white) !important;
       padding: 0.5rem 1.25rem !important;
       border-radius: 4px !important;
       font-weight: 600 !important;
       transition: background 0.2s, color 0.2s !important;
     }
-    .nav-cta:hover { background: var(--gold-light) !important; color: var(--bg) !important; }
+    .nav-cta:hover { background: var(--cobalt-bright) !important; color: var(--ink) !important; }
 
     /* ─── HERO ────────────────────────────────────── */
     #hero {
@@ -110,49 +124,65 @@
       width: 100%;
       position: relative;
       z-index: 2;
-    }
-
-    /* ambient bg */
-    .hero-bg { position: absolute; inset: 0; z-index: 1; overflow: hidden; pointer-events: none; }
-    .orb {
-      position: absolute;
-      border-radius: 50%;
-      filter: blur(140px);
-    }
-    .orb-gold {
-      width: 640px; height: 640px;
-      background: rgba(61,111,168,0.14);
-      top: -60px; right: 4%;
-    }
-    .orb-purple {
-      width: 500px; height: 500px;
-      background: rgba(61,111,168,0.06);
-      bottom: 0; left: 15%;
-    }
-    .grid-lines {
-      position: absolute;
-      inset: 0;
-      background-image:
-        linear-gradient(rgba(61,111,168,0.025) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(61,111,168,0.025) 1px, transparent 1px);
-      background-size: 72px 72px;
+      display: grid;
+      grid-template-columns: 1.3fr 1fr;
+      gap: 2rem;
+      align-items: center;
     }
     .hero-fade-bottom {
       position: absolute;
       bottom: 0; left: 0; right: 0;
       height: 200px;
-      background: linear-gradient(to bottom, transparent, var(--bg));
+      background: linear-gradient(to bottom, transparent, var(--ink));
+      z-index: 1;
     }
+
+    /* ─── HERO LOOP DIAGRAM ───────────────────────── */
+    .hero-diagram {
+      width: 100%;
+      max-width: 440px;
+      margin-left: auto;
+      opacity: 0;
+      transform: translateY(16px);
+      animation: fadeUp 0.9s 0.55s forwards;
+    }
+    .hero-diagram svg { width: 100%; height: auto; display: block; overflow: visible; }
+    .loop-path { fill: none; stroke: var(--line); stroke-width: 1.5; }
+    .loop-dot { fill: var(--signal); filter: drop-shadow(0 0 4px var(--signal)); }
+    .loop-node circle {
+      fill: var(--surface-2);
+      stroke: var(--line-bright);
+      stroke-width: 1.5;
+      transition: stroke 0.2s;
+    }
+    .loop-node:hover circle, .loop-node:focus circle { stroke: var(--cobalt-bright); }
+    .loop-node text {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 7px;
+      letter-spacing: 0.06em;
+      fill: var(--text-faint);
+      text-transform: uppercase;
+    }
+    .loop-tooltip {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 6.5px;
+      fill: var(--cobalt-bright);
+      opacity: 0;
+      transition: opacity 0.2s;
+      pointer-events: none;
+    }
+    .loop-node:hover .loop-tooltip, .loop-node:focus .loop-tooltip { opacity: 1; }
 
     .hero-eyebrow {
       display: inline-flex;
       align-items: center;
       gap: 0.625rem;
+      font-family: 'IBM Plex Mono', monospace;
       font-size: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 0.18em;
+      font-weight: 500;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: var(--gold-light);
+      color: var(--cobalt-bright);
       margin-bottom: 1.75rem;
       opacity: 0;
       transform: translateY(16px);
@@ -163,7 +193,7 @@
       display: block;
       width: 2rem;
       height: 1px;
-      background: var(--gold);
+      background: var(--cobalt);
     }
 
     h1.hero-headline {
@@ -178,7 +208,7 @@
     }
     h1.hero-headline em {
       font-style: italic;
-      color: var(--gold-light);
+      color: var(--cobalt-bright);
     }
 
     .hero-sub {
@@ -204,7 +234,7 @@
 
     .btn-primary {
       display: inline-block;
-      background: var(--gold);
+      background: var(--cobalt);
       color: var(--white);
       font-weight: 600;
       font-size: 0.9375rem;
@@ -214,7 +244,7 @@
       letter-spacing: 0.02em;
       transition: background 0.2s, color 0.2s, transform 0.15s;
     }
-    .btn-primary:hover { background: var(--gold-light); color: var(--bg); transform: translateY(-1px); }
+    .btn-primary:hover { background: var(--cobalt-bright); color: var(--ink); transform: translateY(-1px); }
 
     .btn-ghost {
       display: inline-flex;
@@ -225,7 +255,7 @@
       text-decoration: none;
       letter-spacing: 0.01em;
       transition: color 0.2s;
-      border-bottom: 1px solid var(--border-2);
+      border-bottom: 1px solid var(--line-bright);
       padding-bottom: 2px;
     }
     .btn-ghost:hover { color: var(--white); border-color: var(--text-muted); }
@@ -242,23 +272,27 @@
       display: flex;
       align-items: center;
       gap: 0.5rem;
-      font-size: 0.8125rem;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
       color: var(--text-muted);
       background: var(--surface);
-      border: 1px solid var(--border);
+      border: 1px solid var(--line);
       padding: 0.5rem 1rem;
       border-radius: 100px;
       white-space: nowrap;
     }
     .hero-pill-dot {
       width: 6px; height: 6px;
-      background: var(--gold);
+      background: var(--cobalt);
       border-radius: 50%;
       flex-shrink: 0;
     }
 
     /* ─── DIVIDER ─────────────────────────────────── */
-    .full-divider { border: none; border-top: 1px solid var(--border); margin: 0; }
+    .full-divider { border: none; border-top: 1px solid var(--line); margin: 0; }
 
     /* ─── SECTION BASE ────────────────────────────── */
     .section-wrap {
@@ -270,11 +304,12 @@
       display: flex;
       align-items: center;
       gap: 0.625rem;
+      font-family: 'IBM Plex Mono', monospace;
       font-size: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 0.16em;
+      font-weight: 500;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: var(--gold-light);
+      color: var(--cobalt-bright);
       margin-bottom: 1.25rem;
     }
     .section-label::before {
@@ -282,11 +317,11 @@
       display: block;
       width: 1.5rem;
       height: 1px;
-      background: var(--gold);
+      background: var(--cobalt);
     }
 
     /* ─── PROBLEM ─────────────────────────────────── */
-    #problem { background: var(--bg); }
+    #problem { background: var(--ink); }
 
     .problem-grid {
       display: grid;
@@ -308,22 +343,24 @@
     }
     .problem-stat {
       background: var(--surface);
-      border: 1px solid var(--gold-border);
+      border: 1px solid var(--line);
       border-radius: 12px;
       padding: 2.75rem 2.25rem;
       text-align: center;
     }
     .problem-stat-number {
-      font-family: 'Instrument Serif', serif;
+      font-family: 'Space Grotesk', system-ui, sans-serif;
+      font-weight: 500;
       font-size: clamp(3.5rem, 7vw, 5.25rem);
-      color: var(--gold-light);
+      color: var(--white);
       line-height: 1;
       letter-spacing: -0.02em;
     }
     .problem-stat-rule {
       width: 2.5rem;
-      height: 1px;
-      background: var(--gold-border);
+      height: 2px;
+      background: var(--signal);
+      box-shadow: 0 0 8px var(--signal-dim);
       margin: 1.25rem auto;
     }
     .problem-stat-label {
@@ -333,10 +370,12 @@
     }
     .problem-stat-label span {
       display: block;
-      font-size: 0.75rem;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.7rem;
       color: var(--text-faint);
       margin-top: 0.5rem;
-      letter-spacing: 0.02em;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
     }
 
     /* ─── OFFER ───────────────────────────────────── */
@@ -351,33 +390,42 @@
     .offer-simple { max-width: 62ch; }
     .offer-tagline { font-size: 1.0625rem; color: var(--text-muted); line-height: 1.75; margin-bottom: 1.5rem; }
 
-    .offer-steps { display: flex; flex-direction: column; gap: 1.75rem; }
-    .offer-step { display: flex; align-items: flex-start; gap: 1.1rem; }
-    .offer-step-num {
-      width: 36px; height: 36px;
+    .loop-mini { display: flex; flex-direction: column; }
+    .loop-mini-step { display: flex; align-items: flex-start; gap: 1.1rem; }
+    .loop-mini-node {
+      width: 14px; height: 14px;
       flex-shrink: 0;
+      margin-top: 0.3rem;
       border-radius: 50%;
-      background: var(--gold-dim);
-      border: 1px solid var(--gold-border);
-      color: var(--gold-light);
-      font-weight: 600;
-      font-size: 0.9375rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      background: var(--surface-2);
+      border: 1.5px solid var(--line-bright);
+      transition: border-color 0.2s;
     }
-    .offer-step-body h4 {
-      font-family: 'Fraunces', Georgia, serif;
-      font-size: 0.9375rem;
-      font-weight: 600;
+    .loop-mini-step:hover .loop-mini-node { border-color: var(--cobalt-bright); }
+    .loop-mini-connector { width: 1.5px; height: 1.5rem; background: var(--line); margin-left: 6.25px; }
+    .loop-mini-body h4 {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.8125rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
       color: var(--white);
       margin-bottom: 0.25rem;
-      letter-spacing: -0.01em;
     }
-    .offer-step-body p { font-size: 0.875rem; color: var(--text-muted); line-height: 1.55; }
+    .loop-mini-body p { font-size: 0.875rem; color: var(--text-muted); line-height: 1.55; }
+
+    /* ─── HOW IT WORKS ────────────────────────────── */
+    #how-it-works { background: var(--ink); }
+    .how-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    @media (max-width: 900px) {
+      .how-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ─── START HERE ──────────────────────────────── */
+    #start-here { background: var(--surface); }
 
     /* ─── ABOUT ───────────────────────────────────── */
-    #about { background: var(--bg); }
+    #about { background: var(--ink); }
 
     .about-grid {
       display: grid;
@@ -392,7 +440,7 @@
       margin-top: 0.5rem;
       letter-spacing: -0.02em;
     }
-    .about-left h2 em { color: var(--gold-light); }
+    .about-left h2 em { color: var(--cobalt-bright); }
     .about-headshot-wrap { margin-bottom: 1.5rem; }
     .about-headshot {
       width: 300px;
@@ -400,7 +448,7 @@
       max-width: 100%;
       object-fit: cover;
       border-radius: 24px;
-      border: 1px solid var(--border-2);
+      border: 1px solid var(--line-bright);
       display: block;
     }
     .about-body { display: flex; flex-direction: column; gap: 1.1rem; }
@@ -410,22 +458,21 @@
     .about-right { display: flex; flex-direction: column; gap: 1.25rem; }
     .about-card {
       background: var(--surface);
-      border: 1px solid var(--border);
+      border: 1px solid var(--line);
       border-radius: 10px;
       padding: 1.75rem;
       transition: border-color 0.2s;
     }
-    .about-card:hover { border-color: var(--border-2); }
+    .about-card:hover { border-color: var(--line-bright); }
     .about-card-tag {
       font-size: 0.7rem;
       font-weight: 700;
       letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: var(--gold-light);
+      color: var(--cobalt-bright);
       margin-bottom: 0.625rem;
     }
     .about-card h4 {
-      font-family: 'Fraunces', Georgia, serif;
       font-size: 0.9375rem;
       font-weight: 600;
       color: var(--white);
@@ -436,7 +483,7 @@
 
     .background-bar {
       background: var(--surface-2);
-      border: 1px solid var(--border);
+      border: 1px solid var(--line);
       border-radius: 10px;
       padding: 1.75rem;
     }
@@ -450,10 +497,13 @@
     }
     .tags { display: flex; flex-wrap: wrap; gap: 0.625rem; }
     .tag {
-      font-size: 0.8rem;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
       color: var(--text-muted);
       background: var(--surface);
-      border: 1px solid var(--border);
+      border: 1px solid var(--line);
       padding: 0.375rem 0.875rem;
       border-radius: 100px;
       font-weight: 500;
@@ -493,8 +543,8 @@
     }
     .contact-item-icon {
       width: 30px; height: 30px;
-      background: var(--gold-dim);
-      border: 1px solid var(--gold-border);
+      background: var(--cobalt-dim);
+      border: 1px solid var(--cobalt-border);
       border-radius: 5px;
       display: flex;
       align-items: center;
@@ -510,18 +560,18 @@
       gap: 1rem;
       margin-bottom: 1.5rem;
     }
-    .or-row::before, .or-row::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+    .or-row::before, .or-row::after { content: ''; flex: 1; height: 1px; background: var(--line); }
     .or-row span { font-size: 0.75rem; color: var(--text-faint); letter-spacing: 0.06em; text-transform: uppercase; white-space: nowrap; }
 
     .contact-form { display: flex; flex-direction: column; gap: 1.1rem; }
     .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
     .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
-    .form-group label { font-size: 0.8rem; font-weight: 500; color: var(--text-muted); letter-spacing: 0.02em; }
+    .form-group label { font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; font-weight: 500; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.08em; }
     .form-group input,
     .form-group select,
     .form-group textarea {
-      background: var(--bg);
-      border: 1px solid var(--border);
+      background: var(--ink);
+      border: 1px solid var(--line);
       border-radius: 5px;
       padding: 0.75rem 1rem;
       color: var(--text);
@@ -533,7 +583,7 @@
     }
     .form-group input:focus,
     .form-group select:focus,
-    .form-group textarea:focus { border-color: var(--gold-light); box-shadow: 0 0 0 3px var(--gold-dim); }
+    .form-group textarea:focus { border-color: var(--cobalt-bright); box-shadow: 0 0 0 3px var(--cobalt-dim); }
     .form-group input::placeholder,
     .form-group textarea::placeholder { color: var(--text-faint); }
     .form-group select {
@@ -548,7 +598,7 @@
     .form-note { font-size: 0.75rem; color: var(--text-faint); }
 
     .btn-submit {
-      background: var(--gold);
+      background: var(--cobalt);
       color: var(--white);
       font-weight: 600;
       font-size: 0.9375rem;
@@ -561,7 +611,7 @@
       font-family: inherit;
       text-align: center;
     }
-    .btn-submit:hover { background: var(--gold-light); color: var(--bg); transform: translateY(-1px); }
+    .btn-submit:hover { background: var(--cobalt-bright); color: var(--ink); transform: translateY(-1px); }
     .btn-submit:disabled { background: var(--green); color: var(--green-text); transform: none; cursor: default; }
 
     .radio-group { display: flex; flex-wrap: wrap; gap: 0.625rem; }
@@ -578,26 +628,26 @@
       font-weight: 500;
       color: var(--text-muted);
       background: var(--surface);
-      border: 1px solid var(--border);
+      border: 1px solid var(--line);
       padding: 0.5rem 1.125rem;
       border-radius: 100px;
       cursor: pointer;
       transition: background 0.2s, border-color 0.2s, color 0.2s;
     }
     .radio-option input:checked + label {
-      background: var(--gold-dim);
-      border-color: var(--gold-border);
+      background: var(--cobalt-dim);
+      border-color: var(--cobalt-border);
       color: var(--white);
     }
     .radio-option input:focus-visible + label {
-      outline: 2px solid var(--gold);
+      outline: 2px solid var(--cobalt);
       outline-offset: 2px;
     }
     .optional-tag { color: var(--text-faint); font-weight: 400; }
 
     /* ─── FOOTER ──────────────────────────────────── */
     footer {
-      border-top: 1px solid var(--border);
+      border-top: 1px solid var(--line);
       padding: 2rem;
       display: flex;
       align-items: center;
@@ -607,8 +657,8 @@
       max-width: 1100px;
       margin: 0 auto;
     }
-    .footer-logo { font-family: 'Instrument Serif', serif; font-size: 1rem; color: var(--text-muted); }
-    .footer-logo span { color: var(--gold-light); }
+    .footer-logo { font-family: 'Space Grotesk', system-ui, sans-serif; font-weight: 600; font-size: 1rem; color: var(--text-muted); }
+    .footer-logo span { color: var(--cobalt-bright); }
     .footer-copy { font-size: 0.8125rem; color: var(--text-faint); }
     .footer-links { display: flex; gap: 1.5rem; list-style: none; }
     .footer-links a { font-size: 0.8125rem; color: var(--text-faint); text-decoration: none; transition: color 0.2s; }
@@ -634,6 +684,8 @@
       .offer-grid { grid-template-columns: 1fr; gap: 2.25rem; }
       .about-grid { grid-template-columns: 1fr; gap: 2.25rem; }
       .contact-grid { grid-template-columns: 1fr; gap: 2.25rem; }
+      .hero-inner { grid-template-columns: 1fr; }
+      .hero-diagram { max-width: 320px; margin: 2rem auto 0; }
     }
 
     @media (max-width: 768px) {
@@ -641,6 +693,7 @@
       .section-wrap { padding: 3.5rem 1.25rem; }
       #hero { padding: 5.5rem 1.25rem 3rem; }
       .hero-pills { gap: 0.5rem; }
+      .hero-diagram { max-width: 100%; }
       .form-row { grid-template-columns: 1fr; }
       footer { flex-direction: column; text-align: center; align-items: center; }
       .about-headshot { width: 220px; height: 220px; }
@@ -656,6 +709,8 @@
   <ul class="nav-links">
     <li><a href="#problem">The Problem</a></li>
     <li><a href="#offer">How We Work</a></li>
+    <li><a href="#how-it-works">How It Works</a></li>
+    <li><a href="#start-here">Start Here</a></li>
     <li><a href="#about">About</a></li>
     <li><a href="#contact" class="nav-cta">See If We're a Fit</a></li>
   </ul>
@@ -663,23 +718,68 @@
 
 <!-- ══════════════ HERO ══════════════ -->
 <section id="hero">
-  <div class="hero-bg">
-    <div class="orb orb-gold"></div>
-    <div class="orb orb-purple"></div>
-    <div class="grid-lines"></div>
-    <div class="hero-fade-bottom"></div>
-  </div>
+  <div class="hero-fade-bottom"></div>
   <div class="hero-inner">
-    <div class="hero-eyebrow">Operations &amp; AI Advisory</div>
-    <h1 class="hero-headline">The best operations don't happen by accident. They're <em>built.</em></h1>
-    <p class="hero-sub">Aligned enablement alchemize systems to scale. AI adds the horsepower for efficiency.</p>
-    <div class="hero-actions">
-      <a href="#contact" class="btn-primary">See If We're a Fit</a>
+    <div class="hero-text">
+      <div class="hero-eyebrow">Operations &amp; AI Advisory</div>
+      <h1 class="hero-headline">The best operations don't happen by accident. They're <em>built.</em></h1>
+      <p class="hero-sub">Houser Intelligence Advisory builds the agents and workflows companies actually put into production — and the behavior-change work that makes people use them.</p>
+      <div class="hero-actions">
+        <a href="#contact" class="btn-primary">See If We're a Fit</a>
+      </div>
+      <div class="hero-pills">
+        <div class="hero-pill"><div class="hero-pill-dot"></div>AI that makes it to production</div>
+        <div class="hero-pill"><div class="hero-pill-dot"></div>From solo operators to scaling teams</div>
+        <div class="hero-pill"><div class="hero-pill-dot"></div>Aligned incentives · Fully remote</div>
+      </div>
     </div>
-    <div class="hero-pills">
-      <div class="hero-pill"><div class="hero-pill-dot"></div>AI that makes it to production</div>
-      <div class="hero-pill"><div class="hero-pill-dot"></div>From solo operators to scaling teams</div>
-      <div class="hero-pill"><div class="hero-pill-dot"></div>Aligned incentives · Fully remote</div>    </div>
+    <div class="hero-diagram" aria-hidden="true">
+      <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+        <path id="loop-path" class="loop-path" d="M 80,50 H 320 A 40,40 0 0 1 360,90 V 210 A 40,40 0 0 1 320,250 H 80 A 40,40 0 0 1 40,210 V 90 A 40,40 0 0 1 80,50 Z" />
+
+        <circle class="loop-dot" r="4">
+          <animateMotion id="loop-dot-anim" dur="12s" repeatCount="indefinite" rotate="auto">
+            <mpath href="#loop-path"></mpath>
+          </animateMotion>
+        </circle>
+
+        <g class="loop-node" tabindex="0">
+          <circle cx="110" cy="50" r="7"></circle>
+          <text x="110" y="34" text-anchor="middle">Trigger</text>
+          <text class="loop-tooltip" x="110" y="70" text-anchor="middle">What starts it</text>
+        </g>
+        <g class="loop-node" tabindex="0">
+          <circle cx="200" cy="50" r="7"></circle>
+          <text x="200" y="34" text-anchor="middle">Scope</text>
+          <text class="loop-tooltip" x="200" y="70" text-anchor="middle">What's in bounds</text>
+        </g>
+        <g class="loop-node" tabindex="0">
+          <circle cx="290" cy="50" r="7"></circle>
+          <text x="290" y="34" text-anchor="middle">Action</text>
+          <text class="loop-tooltip" x="290" y="70" text-anchor="middle">The agent executes</text>
+        </g>
+        <g class="loop-node" tabindex="0">
+          <circle cx="360" cy="150" r="7"></circle>
+          <text x="374" y="147" text-anchor="start">Budget</text>
+          <text class="loop-tooltip" x="345" y="172" text-anchor="end">Cost and time caps</text>
+        </g>
+        <g class="loop-node" tabindex="0">
+          <circle cx="290" cy="250" r="7"></circle>
+          <text x="290" y="272" text-anchor="middle">Stop</text>
+          <text class="loop-tooltip" x="290" y="234" text-anchor="middle">Kill conditions</text>
+        </g>
+        <g class="loop-node" tabindex="0">
+          <circle cx="110" cy="250" r="7"></circle>
+          <text x="110" y="272" text-anchor="middle">Verify</text>
+          <text class="loop-tooltip" x="110" y="234" text-anchor="middle">Check the output</text>
+        </g>
+        <g class="loop-node" tabindex="0">
+          <circle cx="40" cy="150" r="7"></circle>
+          <text x="26" y="147" text-anchor="end">Report</text>
+          <text class="loop-tooltip" x="55" y="172" text-anchor="start">What gets logged</text>
+        </g>
+      </svg>
+    </div>
   </div>
 </section>
 
@@ -716,32 +816,72 @@
       <div class="offer-simple reveal">
         <div class="section-label">The Offer</div>
         <h2 class="problem-headline" style="max-width:none;">How We Work Together</h2>
-        <p class="offer-tagline">Engagements are fixed-scope and tailored to where you are today — no two look exactly alike. A typical engagement moves through discovery and diagnostic work, followed by planning, structure design, and implementation. Depending on scope and complexity, engagements generally run one to six months. Full timeline and pricing are shared after an initial conversation about what you actually need — whether that's building internal operations, deploying AI into production, or designing the automated systems behind your marketing programs.</p>
+        <p class="offer-tagline">Engagements are fixed-scope and tailored to where you are today — no two look exactly alike. A typical engagement moves through discovery and diagnostic work, followed by planning, structure design, and implementation. Depending on scope and complexity, engagements generally run one to six months. Full timeline and pricing are shared after an initial conversation about the priority.</p>
         <a href="#contact" class="btn-ghost">Start the conversation →</a>
       </div>
-      <div class="offer-steps reveal reveal-delay-1">
-        <div class="offer-step">
-          <div class="offer-step-num">1</div>
-          <div class="offer-step-body">
+      <div class="loop-mini reveal reveal-delay-1">
+        <div class="loop-mini-step">
+          <div class="loop-mini-node"></div>
+          <div class="loop-mini-body">
             <h4>Discover</h4>
-            <p>Map what's actually happening today</p>
+            <p>Map what's happening today, not what the org chart says is happening</p>
           </div>
         </div>
-        <div class="offer-step">
-          <div class="offer-step-num">2</div>
-          <div class="offer-step-body">
+        <div class="loop-mini-connector"></div>
+        <div class="loop-mini-step">
+          <div class="loop-mini-node"></div>
+          <div class="loop-mini-body">
             <h4>Align</h4>
             <p>Get the right people moving together</p>
           </div>
         </div>
-        <div class="offer-step">
-          <div class="offer-step-num">3</div>
-          <div class="offer-step-body">
+        <div class="loop-mini-connector"></div>
+        <div class="loop-mini-step">
+          <div class="loop-mini-node"></div>
+          <div class="loop-mini-body">
             <h4>Deploy</h4>
             <p>Put it into production and make it stick</p>
           </div>
         </div>
       </div>
+    </div>
+  </div>
+</section>
+
+<hr class="full-divider">
+
+<!-- ══════════════ HOW IT WORKS ══════════════ -->
+<section id="how-it-works">
+  <div class="section-wrap">
+    <div class="section-label">How It Works</div>
+    <h2 class="problem-headline reveal" style="max-width:none;">How it works</h2>
+    <div class="how-grid reveal reveal-delay-1">
+      <div class="about-card">
+        <div class="about-card-tag">Build</div>
+        <p>AI agents and workflows tailored to how your team operates, including marketing and content automation.</p>
+      </div>
+      <div class="about-card">
+        <div class="about-card-tag">Adopt</div>
+        <p>The behavior-change work that makes people use what gets built. This is the part most AI projects skip, and it's why they fail.</p>
+      </div>
+      <div class="about-card">
+        <div class="about-card-tag">Prove</div>
+        <p>Measurable outcomes, tracked from day one, so the investment is legible to everyone who needs to see it.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="full-divider">
+
+<!-- ══════════════ START HERE ══════════════ -->
+<section id="start-here">
+  <div class="section-wrap">
+    <div class="reveal">
+      <div class="section-label">Start Here</div>
+      <h2 class="problem-headline" style="max-width:none;">Start here</h2>
+      <p class="offer-tagline" style="max-width: 68ch;">Every engagement starts with an AI Opportunity Audit: a 45-minute working session and a 24-hour deliverable that maps your highest-ROI automation opportunities and names the one to build first. $999 for most businesses, scaled to fit solo operators and larger teams. It's the on-ramp, not the ceiling.</p>
+      <a href="#contact" class="btn-ghost">Book your audit →</a>
     </div>
   </div>
 </section>
@@ -759,19 +899,19 @@
           <img src="WhitneyHouserHeadshot.jpeg" alt="Whitney Houser" class="about-headshot">
         </div>
         <div class="about-body reveal">
-          <p>Whitney Houser spent 15 years building enablement and operations functions inside SaaS, e-commerce, and ed-tech companies. She holds an MBA, a Graduate Certificate in Organizational Leadership, and an M.A. in Counseling — a combination that positions her at the intersection of operational strategy and organizational change management.</p>
+          <p>Whitney spent 15 years building enablement and operations functions inside SaaS, e-commerce, and ed-tech companies. She holds an MBA, a Graduate Certificate in Organizational Leadership, and an M.A. in Counseling — a combination that positions her at the intersection of operational strategy and organizational change management.</p>
         </div>
       </div>
       <div class="about-right reveal reveal-delay-1">
         <div class="about-card">
-          <div class="about-card-tag">What she actually does</div>
-          <h4>Designs and deploys agentic workflows, builds the teams and operations that make AI actually stick</h4>
+          <div class="about-card-tag">What the work looks like</div>
+          <h4>Designs and deploys agentic workflows, builds the teams and operations that make AI stick</h4>
           <p>Most consultants hand you a strategy deck and leave. Whitney owns the work — designing the agentic workflows, building the enablement structure, and aligning the teams that turn AI from a pilot into a production system.</p>
         </div>
         <div class="about-card">
           <div class="about-card-tag">For those in build mode</div>
           <h4>Solo operators, scaling teams, anyone ready to stop planning and start building.</h4>
-          <p>Whitney works across company sizes and industries — from solo operators building systems for the first time to scaling teams that need the organizational structure to match their ambition. If the work involves building better operations, enabling people, or deploying AI that actually gets used, that's the window she's built for.</p>
+          <p>Whitney works across company sizes and industries — from solo operators building systems for the first time to scaling teams that need the organizational structure to match their ambition. If the work involves building better operations, enabling people, or deploying AI that gets used, that's the window she's built for.</p>
         </div>
         <div class="about-card">
           <div class="about-card-tag">Her model</div>
@@ -814,7 +954,7 @@
           </div>
           <div class="contact-item">
             <div class="contact-item-icon">💼</div>
-            <span><a href="https://linkedin.com/in/houserwhitney" target="_blank" rel="noopener" style="color: var(--gold-light); text-decoration: none;">Connect on LinkedIn</a></span>
+            <span><a href="https://linkedin.com/in/houserwhitney" target="_blank" rel="noopener" style="color: var(--cobalt-bright); text-decoration: none;">Connect on LinkedIn</a></span>
           </div>
         </div>
       </div>
@@ -854,6 +994,8 @@
   <ul class="footer-links">
     <li><a href="#problem">The Problem</a></li>
     <li><a href="#offer">How We Work</a></li>
+    <li><a href="#how-it-works">How It Works</a></li>
+    <li><a href="#start-here">Start Here</a></li>
     <li><a href="#about">About</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
@@ -861,6 +1003,12 @@
 </footer>
 
 <script>
+  // Loop diagram: respect reduced-motion preference
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const dotAnim = document.getElementById('loop-dot-anim');
+    if (dotAnim) dotAnim.remove();
+  }
+
   // Nav scroll state
   const nav = document.getElementById('nav');
   const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 50);
