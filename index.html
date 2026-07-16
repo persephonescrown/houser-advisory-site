@@ -50,7 +50,7 @@
       --green-text:  #A0F0C8;
     }
 
-    html { scroll-behavior: smooth; font-size: 16px; }
+    html { scroll-behavior: smooth; font-size: 16px; overflow-x: clip; }
 
     body {
       background: var(--ink);
@@ -58,7 +58,7 @@
       font-family: 'IBM Plex Sans', system-ui, sans-serif;
       font-weight: 400;
       line-height: 1.65;
-      overflow-x: hidden;
+      overflow-x: clip;
       -webkit-font-smoothing: antialiased;
     }
 
@@ -117,6 +117,45 @@
     }
     .nav-cta:hover { background: var(--cobalt-bright) !important; color: var(--ink) !important; }
 
+    /* ─── NAV: MOBILE TOGGLE ──────────────────────── */
+    .nav-toggle {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
+      width: 44px;
+      height: 44px;
+      background: transparent;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      cursor: pointer;
+      flex-shrink: 0;
+      z-index: 101;
+      position: relative;
+    }
+    .nav-toggle span {
+      display: block;
+      width: 18px;
+      height: 1.5px;
+      background: var(--text);
+      transition: transform 0.25s ease, opacity 0.25s ease;
+    }
+    .nav-toggle.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .nav-toggle.open span:nth-child(2) { opacity: 0; }
+    .nav-toggle.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+    .nav-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 98;
+      opacity: 0;
+      transition: opacity 0.25s ease;
+    }
+    .nav-backdrop.open { display: block; opacity: 1; }
+    body.nav-locked { overflow: hidden; }
+
     /* ─── HERO ────────────────────────────────────── */
     #hero {
       min-height: 100vh;
@@ -138,6 +177,10 @@
       gap: 2rem;
       align-items: center;
     }
+    /* Grid items default to min-width:auto, so the gate-log ticker's
+       max-content width (needed for the marquee) blows out the whole
+       column on mobile. min-width:0 lets the track's own sizing win. */
+    .hero-text, .hero-diagram { min-width: 0; }
     .hero-fade-bottom {
       position: absolute;
       bottom: 0; left: 0; right: 0;
@@ -157,6 +200,7 @@
       animation: fadeUp 0.9s 0.55s forwards;
     }
     .hero-diagram-frame { position: relative; }
+    .hero-diagram-stack { display: none; }
     .hero-diagram svg { width: 100%; height: auto; display: block; overflow: visible; }
     .loop-path { fill: none; stroke: var(--line); stroke-width: 1.5; }
     .loop-dot { fill: var(--signal); filter: drop-shadow(0 0 4px var(--signal)); }
@@ -259,6 +303,13 @@
     }
     @media (prefers-reduced-motion: reduce) {
       .gate-log-track { animation: none !important; }
+      .hero-eyebrow, h1.hero-headline, .hero-sub, .hero-actions, .hero-pills, .hero-diagram,
+      .reveal {
+        animation: none !important;
+        transition: none !important;
+        opacity: 1 !important;
+        transform: none !important;
+      }
     }
 
     .hero-eyebrow {
@@ -702,6 +753,7 @@
       gap: 4rem;
       align-items: start;
     }
+    .about-left, .about-right { min-width: 0; }
     .about-left h2 {
       font-size: clamp(1.75rem, 3.5vw, 2.75rem);
       font-weight: 600;
@@ -804,6 +856,7 @@
       gap: 3.5rem;
       align-items: start;
     }
+    .contact-left, .contact-right { min-width: 0; }
     .contact-left h2 {
       font-size: clamp(1.75rem, 3.5vw, 2.75rem);
       font-weight: 600;
@@ -835,6 +888,7 @@
     /* form */
     .contact-form { display: flex; flex-direction: column; gap: 1.1rem; }
     .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .form-row > * { min-width: 0; }
     .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
     .form-group label { font-family: 'IBM Plex Mono', monospace; font-size: 0.72rem; font-weight: 500; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.08em; }
     .form-group input,
@@ -891,7 +945,7 @@
     .footer-logo { font-family: 'Fraunces', Georgia, serif; font-weight: 600; font-size: 1rem; color: var(--text-muted); }
     .footer-logo span { color: var(--cobalt-bright); }
     .footer-copy { font-size: 0.8125rem; color: var(--text-faint); }
-    .footer-links { display: flex; gap: 1.5rem; list-style: none; }
+    .footer-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem 1.5rem; list-style: none; }
     .footer-links a {
       font-family: 'IBM Plex Mono', monospace;
       font-size: 0.7rem;
@@ -926,8 +980,42 @@
       .tiers { grid-template-columns: 1fr; }
     }
 
+    @media (max-width: 860px) {
+      .nav-toggle { display: flex; }
+      .nav-links {
+        position: fixed;
+        top: 0;
+        right: 0;
+        height: 100vh;
+        width: min(82vw, 320px);
+        flex-direction: column;
+        align-items: stretch;
+        justify-content: flex-start;
+        gap: 0;
+        background: var(--surface);
+        border-left: 1px solid var(--line);
+        padding: 5.5rem 1.5rem 2rem;
+        transform: translateX(100%);
+        visibility: hidden;
+        transition: transform 0.3s ease, visibility 0s linear 0.3s;
+        z-index: 99;
+        overflow-y: auto;
+      }
+      .nav-links.open { transform: translateX(0); visibility: visible; transition: transform 0.3s ease, visibility 0s linear 0s; }
+      .nav-links li { width: 100%; }
+      .nav-links a {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        min-height: 44px;
+        font-size: 0.8rem;
+        border-bottom: 1px solid var(--line);
+      }
+      .nav-links li:last-child { margin-top: 1rem; }
+      .nav-links .nav-cta { justify-content: center; border-bottom: none !important; }
+    }
+
     @media (max-width: 768px) {
-      .nav-links li:not(:last-child) { display: none; }
       .section-wrap { padding: 3.5rem 1.25rem; }
       #hero { padding: 5.5rem 1.25rem 3rem; }
       .hero-pills { gap: 0.5rem; }
@@ -937,6 +1025,46 @@
       footer { flex-direction: column; text-align: center; align-items: center; }
       .about-headshot { width: 220px; height: 220px; }
     }
+
+    @media (max-width: 600px) {
+      .hero-diagram-frame { display: none; }
+      .hero-diagram-stack {
+        display: flex;
+        flex-direction: column;
+        gap: 0.35rem;
+        padding: 0.5rem 0 0.25rem;
+      }
+      .stack-node {
+        display: flex;
+        align-items: center;
+        gap: 0.7rem;
+        font-family: 'IBM Plex Mono', monospace;
+        font-size: 0.7rem;
+        font-weight: 500;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        padding: 0.4rem 0;
+      }
+      .stack-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--surface-2);
+        border: 1.5px solid var(--line-bright);
+        flex-shrink: 0;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .scorer-option, .specimen-tab {
+        min-height: 44px;
+        padding: 0.75rem 1.1rem;
+        display: inline-flex;
+        align-items: center;
+      }
+      .scorer-options { gap: 0.75rem; }
+    }
   </style>
 </head>
 
@@ -945,7 +1073,10 @@
 <!-- ══════════════ NAV ══════════════ -->
 <nav id="nav">
   <a href="#" class="nav-logo">Houser <span>Intelligence</span> Advisory</a>
-  <ul class="nav-links">
+  <button type="button" class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navLinks" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
+  <ul class="nav-links" id="navLinks">
     <li><a href="#method">The Governed Loop</a></li>
     <li><a href="#scorer">Score a Workflow</a></li>
     <li><a href="#engagements">Engagements</a></li>
@@ -954,6 +1085,7 @@
     <li><a href="#contact" class="nav-cta">Book an audit</a></li>
   </ul>
 </nav>
+<div class="nav-backdrop" id="navBackdrop"></div>
 
 <!-- ══════════════ HERO ══════════════ -->
 <section id="hero">
@@ -1017,6 +1149,15 @@
         <div class="loop-center-name">Diagnose</div>
         <div class="loop-center-desc">Map the work as it happens today</div>
       </div>
+      </div>
+      <div class="hero-diagram-stack" aria-hidden="true">
+        <div class="stack-node"><span class="stack-dot"></span>Diagnose</div>
+        <div class="stack-node"><span class="stack-dot"></span>Design</div>
+        <div class="stack-node"><span class="stack-dot"></span>Build</div>
+        <div class="stack-node"><span class="stack-dot"></span>Govern</div>
+        <div class="stack-node"><span class="stack-dot"></span>Adopt</div>
+        <div class="stack-node"><span class="stack-dot"></span>Prove</div>
+        <div class="stack-node"><span class="stack-dot"></span>Expand</div>
       </div>
       <div class="loop-caption">The Governed Loop · How Every Engagement Runs</div>
       <div class="gate-log">
@@ -1540,6 +1681,38 @@
   const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 50);
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
+
+  // Mobile nav toggle
+  const navToggle = document.getElementById('navToggle');
+  const navLinksEl = document.getElementById('navLinks');
+  const navBackdrop = document.getElementById('navBackdrop');
+
+  function closeNav() {
+    navLinksEl.classList.remove('open');
+    navBackdrop.classList.remove('open');
+    navToggle.classList.remove('open');
+    navToggle.setAttribute('aria-expanded', 'false');
+    navToggle.setAttribute('aria-label', 'Open menu');
+    document.body.classList.remove('nav-locked');
+  }
+  function openNav() {
+    navLinksEl.classList.add('open');
+    navBackdrop.classList.add('open');
+    navToggle.classList.add('open');
+    navToggle.setAttribute('aria-expanded', 'true');
+    navToggle.setAttribute('aria-label', 'Close menu');
+    document.body.classList.add('nav-locked');
+  }
+  if (navToggle) {
+    navToggle.addEventListener('click', () => {
+      navLinksEl.classList.contains('open') ? closeNav() : openNav();
+    });
+    navBackdrop.addEventListener('click', closeNav);
+    navLinksEl.querySelectorAll('a').forEach(a => a.addEventListener('click', closeNav));
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeNav();
+    });
+  }
 
   // Scroll reveal
   const io = new IntersectionObserver((entries) => {
